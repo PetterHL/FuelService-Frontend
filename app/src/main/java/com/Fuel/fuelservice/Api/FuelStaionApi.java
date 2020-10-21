@@ -1,5 +1,7 @@
 package com.Fuel.fuelservice.Api;
 
+import com.Fuel.fuelservice.Objects.FuelStations;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -13,6 +15,19 @@ import retrofit2.http.Query;
 
 public interface FuelStaionApi {
 
+    @FormUrlEncoded
+    @POST("auth/create")
+    public Call<ResponseBody> createUser(@Field("email") String email,
+                                         @Field("uid") String username,
+                                         @Field("pwd") String password);
+
+
+    @GET("auth/login")
+    public Call<ResponseBody> userLogin(@Query("uid") String username,
+                                        @Query("pwd") String password);
+
+    @GET("service/items")
+    public Call<List<FuelStations>> getAllItems();
 
 }
 
