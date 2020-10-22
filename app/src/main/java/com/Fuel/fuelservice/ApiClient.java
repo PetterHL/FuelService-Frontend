@@ -9,9 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     //URL AT SCHOOL
-    // private static final String BASE_URL = "http://10.22.194.55:8080/FuelService/api/";
+    private static final String BASE_URL = "http://10.52.192.208:8080/FuelService/api/";
     //URL AT HOME
-    private static final String BASE_URL = "¨<";
 
     private static ApiClient SINGLETON;
     Retrofit retrofit = null;

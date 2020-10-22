@@ -36,7 +36,7 @@ public class FuelStationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fuelstations, container, false);
 
-        itemRecyclerView = view.findViewById(R.id.stationsRecView);
+        itemRecyclerView = view.findViewById(R.id.recyclerView);
 
         setItemsList();
 
