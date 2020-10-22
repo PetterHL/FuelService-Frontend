@@ -1,4 +1,4 @@
-package com.Fuel.fuelservice.FuelStationView;
+package com.Fuel.fuelservice;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,9 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Fuel.fuelservice.Objects.FuelStations;
-import com.Fuel.fuelservice.R;
 
 import java.util.ArrayList;
+
+
 
 public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationRecViewAdapter.ViewHolder> {
 
@@ -44,7 +45,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.StationTitle.setText(fuelStations.get(position).getTitle());
+        holder.StationTitle.setText(fuelStations.get(position).getName());
         
     }
     public int getStationCount() {
@@ -56,13 +57,13 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView StationTitle, petrolPrice, dieselPrice ;
         private CardView parent;
         private ImageView imageView;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ViewHolder(@NonNull View StationView) {
+            super(StationView);
             StationTitle = itemView.findViewById(R.id.txtName);
         }
     }
