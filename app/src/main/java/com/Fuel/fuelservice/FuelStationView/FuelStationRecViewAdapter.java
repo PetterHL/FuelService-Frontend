@@ -17,9 +17,7 @@ import com.Fuel.fuelservice.R;
 
 import java.util.ArrayList;
 
-public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationRecViewAdapter> {
-
-
+public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationRecViewAdapter.ViewHolder> {
 
     private ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private Context context;
@@ -36,16 +34,18 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
         return holder;
     }
+
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.StationTitle.setText(fuelStations.get(position).getTitle());
-
-       /* Glide.with(context)
-                .asBitmap()
-                .load("https://picsum.photos/200%22")
-                .into(holder.imageView);*/
-
+        
     }
     public int getStationCount() {
         return fuelStations.size();

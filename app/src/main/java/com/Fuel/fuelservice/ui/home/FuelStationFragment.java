@@ -1,6 +1,7 @@
 package com.Fuel.fuelservice.ui.home;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Fuel.fuelservice.ApiClient;
+import com.Fuel.fuelservice.FuelStationView.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
+import com.Fuel.fuelservice.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,20 +27,19 @@ import retrofit2.Response;
 public class FuelStationFragment {
 
     private RecyclerView fuelStationRecView;
-    private FuelStationViewAdapter adapter;
+    private FuelStationRecViewAdapter adapter;
     private ArrayList<FuelStations> fuelStations = new ArrayList<>();
 
     @Nullable
     @Override
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_items, container, false);
+        View view = inflater.inflate(R.layout.fragment_fuelstations, container, false);
 
-        fuelStationRecView = view.findViewById(R.id.fuelStationRecView);
+        fuelStationRecView = view.findViewById(R.id.stationsRecView);
 
 
-        adapter.setItems(fuelStations);
+        adapter.setFuelStations(fuelStations);
 
         fuelStationRecView.setAdapter(adapter);
         fuelStationRecView.setLayoutManager(new GridLayoutManager(getContext(),1));

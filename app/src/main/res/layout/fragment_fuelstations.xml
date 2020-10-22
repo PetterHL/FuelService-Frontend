@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:scrollbars='vertical'
         android:layout_centerHorizontal="true"
-        android:id="@+id/itemsRecView"
+        android:id="@+id/stationsRecView"
         />
 </RelativeLayout>
