@@ -45,8 +45,10 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.StationTitle.setText(fuelStations.get(position).getName());
-        
+        holder.PetrolPrice.setText(fuelStations.get(position).petrolToString());
+        holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
     }
+
 
     public void setFuelStations(ArrayList<FuelStations> fuelStations) {
         this.fuelStations = fuelStations;
