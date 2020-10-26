@@ -26,7 +26,6 @@ import retrofit2.Response;
 
 public class FuelStationFragment extends Fragment {
 
-
     private ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
@@ -55,7 +54,7 @@ public class FuelStationFragment extends Fragment {
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON()
                 .getApi()
-                .getAllItems();
+                .getAllStations();
 
         call.enqueue(new Callback<List<FuelStations>>() {
             @Override

@@ -27,7 +27,7 @@ public interface FuelStaionApi {
                                         @Query("pwd") String password);
 
     @GET("service/stations")
-    public Call<List<FuelStations>> getAllItems();
+    public Call<List<FuelStations>> getAllStations();
 
 }
 

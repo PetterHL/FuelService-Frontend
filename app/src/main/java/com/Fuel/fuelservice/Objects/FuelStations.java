@@ -10,6 +10,28 @@ public class FuelStations {
     private boolean diesel;
     private boolean petrol;
 
+    public FuelStations(Long id) {
+        this.id = id;
+    }
+
+    public FuelStations(String name, String coordinates, int petrolPrice, int dieselPrice, boolean diesel, boolean petrol) {
+        this.name = name;
+        this.coordinates = coordinates;
+        this.petrolPrice = petrolPrice;
+        this.dieselPrice = dieselPrice;
+        this.diesel = diesel;
+        this.petrol = petrol;
+    }
+
+    public FuelStations(Long id, String name, String coordinates, int petrolPrice, int dieselPrice, boolean diesel, boolean petrol) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.petrolPrice = petrolPrice;
+        this.dieselPrice = dieselPrice;
+        this.diesel = diesel;
+        this.petrol = petrol;
+    }
 
     public Long getId() {
         return id;
@@ -67,13 +89,16 @@ public class FuelStations {
         this.petrol = petrol;
     }
 
-    public FuelStations(Long id, String name, String coordinates, int petrolPrice, int dieselPrice, boolean diesel, boolean petrol) {
-        this.id = id;
-        this.name = name;
-        this.coordinates = coordinates;
-        this.petrolPrice = petrolPrice;
-        this.dieselPrice = dieselPrice;
-        this.diesel = diesel;
-        this.petrol = petrol;
+    @Override
+    public String toString() {
+        return "FuelStations{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", coordinates='" + coordinates + '\'' +
+                ", petrolPrice=" + petrolPrice +
+                ", dieselPrice=" + dieselPrice +
+                ", diesel=" + diesel +
+                ", petrol=" + petrol +
+                '}';
     }
 }
