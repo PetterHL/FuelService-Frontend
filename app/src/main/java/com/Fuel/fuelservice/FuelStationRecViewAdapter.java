@@ -32,14 +32,13 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fuelstation_list_stations, parent, false);
         ViewHolder holder = new ViewHolder(view);
-
         return holder;
     }
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return fuelStations.size();
     }
 
     @SuppressLint("SetTextI18n")
@@ -48,24 +47,27 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         holder.StationTitle.setText(fuelStations.get(position).getName());
         
     }
-    public int getStationCount() {
-        return fuelStations.size();
-    }
 
-    public void setFuelStations(ArrayList<FuelStations> items) {
+    public void setFuelStations(ArrayList<FuelStations> fuelStations) {
         this.fuelStations = fuelStations;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView StationTitle, petrolPrice, dieselPrice ;
+        private TextView StationTitle;
         private CardView parent;
-        private ImageView imageView;
+
         public ViewHolder(@NonNull View StationView) {
             super(StationView);
-            StationTitle = itemView.findViewById(R.id.txtName);
+            //parent = itemView.findViewById(R.id.recyclerView);
+            StationTitle = StationView.findViewById(R.id.headerText);
         }
     }
 
+    public long getItemId(int position) {
+        return fuelStations.get(position).getId();
     }
+
+
+}

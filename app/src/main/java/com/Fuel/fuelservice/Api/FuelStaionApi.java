@@ -26,8 +26,8 @@ public interface FuelStaionApi {
     public Call<ResponseBody> userLogin(@Query("uid") String username,
                                         @Query("pwd") String password);
 
-    @GET("service/items")
-    public Call<List<FuelStations>> getAllItems();
+    @GET("service/stations")
+    public Call<List<FuelStations>> getAllStations();
 
 }
 

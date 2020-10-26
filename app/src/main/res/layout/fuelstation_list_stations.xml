@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:layout_margin="5dp"
     android:id="@+id/parent">
 
 
@@ -10,8 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Station name"
-        android:id="@+id/txtName">
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView"
+        android:id="@+id/headerText">
 
     </TextView>
 
-</RelativeLayout>
+    </RelativeLayout>
