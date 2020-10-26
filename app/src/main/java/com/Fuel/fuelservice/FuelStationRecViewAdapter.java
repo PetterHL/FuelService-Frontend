@@ -60,8 +60,8 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
         public ViewHolder(@NonNull View StationView) {
             super(StationView);
-            parent = itemView.findViewById(R.id.recyclerView);
-            StationTitle = itemView.findViewById(R.id.headerText);
+            //parent = itemView.findViewById(R.id.recyclerView);
+            StationTitle = StationView.findViewById(R.id.headerText);
         }
     }
 

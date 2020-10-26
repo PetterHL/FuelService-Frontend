@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ public class GalleryFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        Button regButton = (Button) root.findViewById(R.id.button);
         return root;
     }
 }

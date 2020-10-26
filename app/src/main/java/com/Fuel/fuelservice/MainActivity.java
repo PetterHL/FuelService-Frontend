@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,6 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.Fuel.fuelservice.ui.gallery.GalleryFragment;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //  Set which fragment to run when the app opens
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_view,
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                     new FuelStationFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_view);
+            navigationView.setCheckedItem(R.id.nav_home);
         }
     }
 
@@ -73,6 +75,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new FuelStationFragment()).commit();
+                break;
+
+
+            case R.id.nav_gallery:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new GalleryFragment()).commit();
+                break;
+
+
+        }
+        drawerLayout.closeDrawer((GravityCompat.START));
+        return true;
     }
 }

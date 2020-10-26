@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="4dp">
-
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
@@ -15,13 +9,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Line 1"
+        android:text="Station name"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imageView"
-        android:id="@+id/headerText"/>
+        android:id="@+id/headerText">
+
+    </TextView>
 
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
