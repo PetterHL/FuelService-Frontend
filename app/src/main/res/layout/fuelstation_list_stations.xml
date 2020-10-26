@@ -7,11 +7,33 @@
 
 
     <TextView
+        android:id="@+id/headerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Station name"
-        android:id="@+id/txtName">
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true">
+
 
     </TextView>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/petrolPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerText"
+        android:layout_marginTop="20dp"
+        android:text="Petrol price"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/dieselPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerText"
+        android:layout_marginTop="20dp"
+        android:text="Diesel price"
+        android:textSize="20sp"/>
+
+    </RelativeLayout>
