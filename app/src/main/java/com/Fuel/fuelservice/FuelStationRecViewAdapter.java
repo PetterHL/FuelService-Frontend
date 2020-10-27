@@ -45,8 +45,10 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.StationTitle.setText(fuelStations.get(position).getName());
-        
+        holder.PetrolPrice.setText(fuelStations.get(position).petrolToString());
+        holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
     }
+
 
     public void setFuelStations(ArrayList<FuelStations> fuelStations) {
         this.fuelStations = fuelStations;
@@ -56,12 +58,16 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView StationTitle;
+        private TextView PetrolPrice;
+        private TextView DieselPrice;
         private CardView parent;
 
         public ViewHolder(@NonNull View StationView) {
             super(StationView);
-            //parent = itemView.findViewById(R.id.recyclerView);
+            parent = itemView.findViewById(R.id.recyclerView);
             StationTitle = StationView.findViewById(R.id.headerText);
+            PetrolPrice = StationView.findViewById(R.id.petrolPrice);
+            DieselPrice = StationView.findViewById(R.id.dieselPrice);
         }
     }
 
