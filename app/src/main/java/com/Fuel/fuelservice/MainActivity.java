@@ -20,7 +20,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.Fuel.fuelservice.ui.gallery.GalleryFragment;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -83,12 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new FuelStationFragment()).commit();
-                break;
-
-
-            case R.id.nav_gallery:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
-                        new GalleryFragment()).commit();
                 break;
 
 
