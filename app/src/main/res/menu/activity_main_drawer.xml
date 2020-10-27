@@ -6,15 +6,55 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:icon="@drawable/ic_baseline_apps_24"
+            android:title="@string/menu_prices" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_baseline_map_24"
+            android:title="@string/menu_map" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+
+
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_baseline_signal_cellular_alt_24"
+            android:title="@string/menu_stats" />
+        <item
+            android:id="@+id/nav_MyCar"
+            android:icon="@drawable/ic_baseline_directions_car_24"
+            android:title="@string/menu_MyCar" />
+        <item
+            android:id="@+id/nav_fuelCalculator"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_fuelCalculator" />
+    </group>
+
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="@string/menu_login" />
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/ic_baseline_person_add_24"
+            android:title="@string/menu_register" />
+        <item
+            android:id="@+id/nav_logOut"
+            android:visible="false"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:title="@string/menu_logOut" />
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/menu_settings" />
     </group>
 </menu>
