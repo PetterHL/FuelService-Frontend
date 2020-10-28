@@ -2,11 +2,13 @@ package com.Fuel.fuelservice;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -43,10 +45,12 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.StationTitle.setText(fuelStations.get(position).getName());
         holder.PetrolPrice.setText(fuelStations.get(position).petrolToString());
         holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
+
+
     }
 
 
