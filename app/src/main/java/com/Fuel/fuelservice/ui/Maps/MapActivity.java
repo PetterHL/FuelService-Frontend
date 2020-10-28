@@ -1,6 +1,5 @@
 package com.Fuel.fuelservice.ui.Maps;
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.Fuel.fuelservice.R;
@@ -19,18 +17,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
-public class MapFragment extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap map;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.map_fragment, container, false);
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.map_fragment);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.nav_map);
         mapFragment.getMapAsync(this);
-
-        return null;
     }
 
     @Override
@@ -40,6 +35,5 @@ public class MapFragment extends FragmentActivity implements OnMapReadyCallback 
         LatLng aalesund = new LatLng(62.471145, 6.153982);
         googleMap.addMarker(new MarkerOptions().position(aalesund).title("Ålesund"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(aalesund));
-        
     }
 }

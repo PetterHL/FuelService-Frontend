@@ -1,5 +1,6 @@
 package com.Fuel.fuelservice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.Fuel.fuelservice.ui.Maps.MapActivity;
 import com.Fuel.fuelservice.ui.Maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.navigation.NavigationView;
@@ -90,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new FuelStationFragment()).commit();
                 break;
             case R.id.nav_map:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
-                        new MapFragment()).commit();
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
 
         }
         drawerLayout.closeDrawer((GravityCompat.START));
