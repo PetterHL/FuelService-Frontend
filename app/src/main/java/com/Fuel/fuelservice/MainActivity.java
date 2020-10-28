@@ -12,8 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.Fuel.fuelservice.ui.Maps.MapFragment;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
+
+    GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +89,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new FuelStationFragment()).commit();
                 break;
-
+            case R.id.nav_map:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new MapFragment()).commit();
 
         }
         drawerLayout.closeDrawer((GravityCompat.START));
