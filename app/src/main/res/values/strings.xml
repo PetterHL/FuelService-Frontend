@@ -16,4 +16,13 @@
     <string name="menu_login">Login</string>
     <string name="menu_register">Register</string>
     <string name="menu_logOut">Log out</string>
+
+    <string name="register_heading">Lag Bruker</string>
+    <string name="action_reg_button">Registrer</string>
+    <string name="prompt_password">Passord</string>
+    <string name="prompt_username">Brukernavn</string>
+    <string name="prompt_email">Epost</string>
+
+    <string name="action_login_button">Logg inn</string>
+    <string name="login_header">Logg inn</string>
 </resources>

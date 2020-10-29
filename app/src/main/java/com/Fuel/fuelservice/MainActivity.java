@@ -12,8 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.Fuel.fuelservice.preference.UserPrefs;
+import com.Fuel.fuelservice.ui.createUser.RegisterFragment;
+import com.Fuel.fuelservice.ui.login.LoginFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navMenu = navigationView.getMenu();
 
+        updateOnStartUp();
+
         //  Set which fragment to run when the app opens
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
@@ -83,10 +90,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new FuelStationFragment()).commit();
                 break;
-
-
+            case R.id.nav_register:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new RegisterFragment()).commit();
+                break;
+            case R.id.nav_login:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new LoginFragment()).commit();
+                break;
+            case R.id.nav_logOut:
+                UserPrefs userPrefs = new UserPrefs(this);
+                userPrefs.setToken("");
+                finish();
+                startActivity(getIntent());
+                break;
         }
         drawerLayout.closeDrawer((GravityCompat.START));
         return true;
+    }
+
+    public void updateOnStartUp() {
+        UserPrefs userPrefs = new UserPrefs(getApplicationContext());
+
+        if (userPrefs.getToken().isEmpty()) {
+            navMenu.findItem(R.id.nav_home).setVisible(true);
+            navMenu.findItem(R.id.nav_map).setVisible(true);
+            navMenu.findItem(R.id.nav_stats).setVisible(false);
+            navMenu.findItem(R.id.nav_MyCar).setVisible(false);
+            navMenu.findItem(R.id.nav_fuelCalculator).setVisible(false);
+            navMenu.findItem(R.id.nav_login).setVisible(true);
+            navMenu.findItem(R.id.nav_register).setVisible(true);
+            navMenu.findItem(R.id.nav_settings).setVisible(true);
+            navMenu.findItem(R.id.nav_logOut).setVisible(false);
+        } else {
+            navMenu.findItem(R.id.nav_home).setVisible(true);
+            navMenu.findItem(R.id.nav_map).setVisible(true);
+            navMenu.findItem(R.id.nav_stats).setVisible(true);
+            navMenu.findItem(R.id.nav_MyCar).setVisible(true);
+            navMenu.findItem(R.id.nav_fuelCalculator).setVisible(true);
+            navMenu.findItem(R.id.nav_login).setVisible(false);
+            navMenu.findItem(R.id.nav_register).setVisible(false);
+            navMenu.findItem(R.id.nav_settings).setVisible(true);
+            navMenu.findItem(R.id.nav_logOut).setVisible(true);
+        }
     }
 }
