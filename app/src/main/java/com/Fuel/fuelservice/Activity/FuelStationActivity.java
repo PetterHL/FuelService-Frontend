@@ -22,5 +22,7 @@ public class FuelStationActivity extends AppCompatActivity {
         textViewDieselPrice = findViewById(R.id.)
         textViewPetrolPrice = findViewById(R.id.)
         textViewPetrolPrice = findViewById(R.id.)*/
+
+        textViewName.setText(getIntent().getStringExtra("Fuel station"));
     }
 }
