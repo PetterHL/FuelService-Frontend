@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Fuel.fuelservice.Activity.FuelStationActivity;
 import com.Fuel.fuelservice.Objects.FuelStations;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,28 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
 
 
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(View v) {
+                // Enter specific item
+                Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
+                FuelStations fuelStation = fuelStations.get(position);
+                System.out.println(fuelStation.getId());
+
+                Intent intent = new Intent(context, FuelStationActivity.class);
+                intent.putExtra("Fuel station", fuelStation.getName());
+               /* intent.putExtra("Coordinates", fuelStation.getCoordinates());
+                intent.putExtra("Diesel price", fuelStation.getDieselPrice());
+                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());*/
+
+                v.getContext().startActivity(intent);
+            }
+    });
+
+        Glide.with(context)
+                .asBitmap()
+                .load("https://picsum.photos/100")
+                .into(holder.imageView);
     }
 
 
@@ -64,6 +88,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         private TextView StationTitle;
         private TextView PetrolPrice;
         private TextView DieselPrice;
+        private ImageView imageView;
         private CardView parent;
 
         public ViewHolder(@NonNull View StationView) {
@@ -72,6 +97,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
             StationTitle = StationView.findViewById(R.id.headerText);
             PetrolPrice = StationView.findViewById(R.id.petrolPrice);
             DieselPrice = StationView.findViewById(R.id.dieselPrice);
+            imageView = itemView.findViewById(R.id.icon);
         }
     }
 
