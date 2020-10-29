@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,11 +13,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.Fuel.fuelservice.ui.Maps.MapActivity;
-import com.Fuel.fuelservice.ui.Maps.MapFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -27,9 +23,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
         drawerLayout.closeDrawer((GravityCompat.START));
+
         return true;
     }
+
 }

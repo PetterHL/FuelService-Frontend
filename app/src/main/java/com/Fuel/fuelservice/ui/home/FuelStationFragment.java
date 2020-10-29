@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 public class FuelStationFragment extends Fragment {
 
-    private ArrayList<FuelStations> fuelStations = new ArrayList<>();
+    public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
 
@@ -44,8 +44,10 @@ public class FuelStationFragment extends Fragment {
 
         itemRecyclerView.setAdapter(adapter);
         itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-
+        getFuelStations();
         return view;
+
+
 
     }
 
@@ -63,6 +65,9 @@ public class FuelStationFragment extends Fragment {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
+                    System.out.println("HEI");
+                    System.out.println(fuelStations.size());
+
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
                 }
@@ -71,10 +76,11 @@ public class FuelStationFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<FuelStations>> call, Throwable t) {
-
             }
         });
     }
 
-
+    public ArrayList<FuelStations> getFuelStations() {
+        return fuelStations;
+    }
 }
