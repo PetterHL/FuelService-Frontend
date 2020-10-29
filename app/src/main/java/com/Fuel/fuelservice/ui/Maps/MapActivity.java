@@ -18,7 +18,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +32,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Sends a GET request to the server and fills the array with the fuelstations
         setFuelStationsList();
         setContentView(R.layout.map_fragment);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.nav_map);
@@ -43,16 +44,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
+        LatLng Maker = null;
+
+        //Goes though all the different fuelstations
         for(FuelStations fuelStations : fuelStations) {
 
+            //Splits the coordinateString to an array
             String [] value = fuelStations.getCoordinates().split(",");
 
+            //Changes the values from String to double
             double coordNorth = Double.valueOf(value[0]);
             double coordWest = Double.valueOf(value[1]);
 
-            LatLng heihei = new LatLng(coordNorth, coordWest);
-            googleMap.addMarker(new MarkerOptions().position(heihei).title(fuelStations.getName()));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(heihei));
+            //Adds a marker to the map at the correct location
+            Maker = new LatLng(coordNorth, coordWest);
+            googleMap.addMarker(new MarkerOptions().position(Maker).title(fuelStations.getName()));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(Maker));
+        }
+
+        //If the Maker is initialized by the for loop
+        if(Maker != null) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Maker, 11));
         }
     }
 
@@ -68,9 +80,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
-                    System.out.println("1111111111111111111111111111");
                 } else {
-                    System.out.println("2222222222222222222222222222");
+
                 }
 
             }
