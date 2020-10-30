@@ -1,12 +1,20 @@
 package com.Fuel.fuelservice.ui.Maps;
 import android.app.Activity;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.Fuel.fuelservice.ApiClient;
+import com.Fuel.fuelservice.MainActivity;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
@@ -15,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -27,6 +36,10 @@ import retrofit2.Response;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap map;
+
+    Dialog myDialog;
+
+    LatLng Maker = null;
 
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
 
@@ -43,8 +56,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
-        LatLng Maker = null;
 
         //Goes though all the different fuelstations
         for(FuelStations fuelStations : fuelStations) {
@@ -66,6 +77,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if(Maker != null) {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(Maker, 11));
         }
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                for(FuelStations fuelStations: fuelStations) {
+                    if (fuelStations.getName().equals(marker.getTitle())) {
+                        Showpopup(fuelStations);
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    public void Showpopup(FuelStations fuelStations) {
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.heiheihei,
+                new Map_details_fragment()).commit();
+
+
+        //TextView textbox;
+        //setContentView(R.layout.map_details);
+        //textbox = (TextView) findViewById(R.id.station);
+        //textbox.setText(fuelStations.getName());
     }
 
     public void setFuelStationsList() {
