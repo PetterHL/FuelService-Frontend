@@ -62,7 +62,6 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
             bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
-            Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
                 FuelStations fuelStation = fuelStations.get(position);
 
                 String fuelStationName = fuelStation.getName();
@@ -76,7 +75,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
                 bundle.putString("DieselPrice", petrolString);
                 bundle.putString("PetrolPrice", dieselString);
                 intent.putExtra("myPackage", bundle);
-                
+
                 bottomSheetFragment.setArguments(bundle);
 
             }
