@@ -64,18 +64,12 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
             bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
-            Toast.makeText(context, "Entered Bottom Sheet", Toast.LENGTH_SHORT).show();
-           /*     Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
                 FuelStations fuelStation = fuelStations.get(position);
-                System.out.println(fuelStation.getId());
 
                 Intent intent = new Intent(context, BottomSheetDialogFragment.class);
                 intent.putExtra("Fuel station", fuelStation.getName());
-               *//* intent.putExtra("Coordinates", fuelStation.getCoordinates());
                 intent.putExtra("Diesel price", fuelStation.getDieselPrice());
-                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());*//*
-
-                v.getContext().startActivity(intent);*/
+                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());
             }
     });
 
@@ -96,6 +90,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         private TextView StationTitle;
         private TextView PetrolPrice;
         private TextView DieselPrice;
+        private TextView TvStationView;
         private ImageView imageView;
         private CardView parent;
 
