@@ -37,10 +37,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     GoogleMap map;
 
-    Dialog myDialog;
-
-    LatLng Maker = null;
-
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +52,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+
+        LatLng Maker = null;
 
         //Goes though all the different fuelstations
         for(FuelStations fuelStations : fuelStations) {
@@ -92,16 +90,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
     }
 
-    public void Showpopup(FuelStations fuelStations) {
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.heiheihei,
-                new Map_details_fragment()).commit();
-
-
-        //TextView textbox;
-        //setContentView(R.layout.map_details);
-        //textbox = (TextView) findViewById(R.id.station);
-        //textbox.setText(fuelStations.getName());
+    public void Showpopup(FuelStations fuelStation) {
+        
+        TextView textbox;
+        setContentView(R.layout.map_details);
+        textbox = (TextView) findViewById(R.id.station);
+        textbox.setText(fuelStation.getName());
     }
 
     public void setFuelStationsList() {
