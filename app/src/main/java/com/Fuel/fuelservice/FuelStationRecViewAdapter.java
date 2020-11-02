@@ -1,9 +1,9 @@
 package com.Fuel.fuelservice;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +16,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Fuel.fuelservice.Activity.FuelStationActivity;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.fragment.BottomSheetFragment;
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
@@ -64,12 +62,23 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
             BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
             bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
+            Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
                 FuelStations fuelStation = fuelStations.get(position);
 
-                Intent intent = new Intent(context, BottomSheetDialogFragment.class);
-                intent.putExtra("Fuel station", fuelStation.getName());
-                intent.putExtra("Diesel price", fuelStation.getDieselPrice());
-                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());
+                String fuelStationName = fuelStation.getName();
+                String petrolString = String.valueOf(fuelStation.getPetrolPrice());
+                String dieselString = String.valueOf(fuelStation.getDieselPrice());
+
+
+                Intent intent = new Intent(context, BottomSheetFragment.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("FuelStation", fuelStationName);
+                bundle.putString("DieselPrice", petrolString);
+                bundle.putString("PetrolPrice", dieselString);
+                intent.putExtra("myPackage", bundle);
+                
+                bottomSheetFragment.setArguments(bundle);
+
             }
     });
 
@@ -107,6 +116,4 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
     public long getItemId(int position) {
         return fuelStations.get(position).getId();
     }
-
-
 }
