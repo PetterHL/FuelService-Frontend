@@ -1,6 +1,7 @@
 package com.Fuel.fuelservice;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Fuel.fuelservice.Activity.FuelStationActivity;
 import com.Fuel.fuelservice.Objects.FuelStations;
+import com.Fuel.fuelservice.fragment.BottomSheetFragment;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
@@ -55,19 +59,23 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
         @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 // Enter specific item
-                Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
+
+            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+            bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
+            Toast.makeText(context, "Entered Bottom Sheet", Toast.LENGTH_SHORT).show();
+           /*     Toast.makeText(context, fuelStations.get(position).getName(), Toast.LENGTH_SHORT).show();
                 FuelStations fuelStation = fuelStations.get(position);
                 System.out.println(fuelStation.getId());
 
-                Intent intent = new Intent(context, FuelStationActivity.class);
+                Intent intent = new Intent(context, BottomSheetDialogFragment.class);
                 intent.putExtra("Fuel station", fuelStation.getName());
-               /* intent.putExtra("Coordinates", fuelStation.getCoordinates());
+               *//* intent.putExtra("Coordinates", fuelStation.getCoordinates());
                 intent.putExtra("Diesel price", fuelStation.getDieselPrice());
-                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());*/
+                intent.putExtra("Petrol price", fuelStation.getPetrolPrice());*//*
 
-                v.getContext().startActivity(intent);
+                v.getContext().startActivity(intent);*/
             }
     });
 

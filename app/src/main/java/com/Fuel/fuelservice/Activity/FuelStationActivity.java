@@ -17,12 +17,12 @@ public class FuelStationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fuelstation);
 
-        textViewName = findViewById(R.id.station_name);
+        //textViewName = findViewById(R.id.station_name);
      /*   textViewCoordinates = findViewById(R.id.)
         textViewDieselPrice = findViewById(R.id.)
         textViewPetrolPrice = findViewById(R.id.)
         textViewPetrolPrice = findViewById(R.id.)*/
 
-        textViewName.setText(getIntent().getStringExtra("Fuel station"));
+       // textViewName.setText(getIntent().getStringExtra("Fuel station"));
     }
 }
