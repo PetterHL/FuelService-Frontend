@@ -17,6 +17,7 @@ import com.Fuel.fuelservice.ApiClient;
 import com.Fuel.fuelservice.MainActivity;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
+import com.Fuel.fuelservice.fragment.BottomSheetFragment;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,14 +34,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static androidx.fragment.app.FragmentActivity.*;
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    public MapActivity() {
+    }
+
     GoogleMap map;
+
+
+    private Context context;
+
+    public MapActivity(Context context) {
+        this.context = context;
+    }
+
 
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.context = context;
 
         //Sends a GET request to the server and fills the array with the fuelstations
         setFuelStationsList();
@@ -91,11 +107,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     public void Showpopup(FuelStations fuelStation) {
-        
-        TextView textbox;
-        setContentView(R.layout.map_details);
-        textbox = (TextView) findViewById(R.id.station);
-        textbox.setText(fuelStation.getName());
+
+        BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+        bottomSheetFragment.show(((FragmentActivity)MapActivity.this).getSupportFragmentManager(), bottomSheetFragment.getTag());
+
+        String fuelStationName = fuelStation.getName();
+        String petrolString = String.valueOf(fuelStation.getPetrolPrice());
+        String dieselString = String.valueOf(fuelStation.getDieselPrice());
+
+        System.out.println(fuelStationName);
+
+
+        Intent intent = new Intent(MapActivity.this, BottomSheetFragment.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("FuelStation", fuelStationName);
+        bundle.putString("DieselPrice", petrolString);
+        bundle.putString("PetrolPrice", dieselString);
+        intent.putExtra("myPackage", bundle);
+
+        bottomSheetFragment.setArguments(bundle);
+
     }
 
     public void setFuelStationsList() {
@@ -113,7 +144,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 } else {
 
                 }
-
             }
 
             @Override
