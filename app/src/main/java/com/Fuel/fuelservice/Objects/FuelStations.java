@@ -102,9 +102,9 @@ public class FuelStations {
                 '}';
     }
     public String petrolToString() {
-        return "Petrol = " + petrolPrice;
+        return "95 | " + petrolPrice;
     }
     public String dieselToString() {
-        return "Diesel = " + dieselPrice;
+        return "D | = " + dieselPrice;
     }
 }
