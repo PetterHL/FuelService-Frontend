@@ -1,10 +1,9 @@
 package com.Fuel.fuelservice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.Fuel.fuelservice.ui.Maps.MapActivity;
+import com.google.android.gms.maps.GoogleMap;
 
 import com.Fuel.fuelservice.preference.UserPrefs;
 import com.Fuel.fuelservice.ui.createUser.RegisterFragment;
@@ -26,9 +28,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
+
+    GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new FuelStationFragment()).commit();
                 break;
+            case R.id.nav_map:
+                Intent intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
+
             case R.id.nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new RegisterFragment()).commit();
@@ -106,8 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         drawerLayout.closeDrawer((GravityCompat.START));
+
         return true;
     }
+
 
     public void updateOnStartUp() {
         UserPrefs userPrefs = new UserPrefs(getApplicationContext());
