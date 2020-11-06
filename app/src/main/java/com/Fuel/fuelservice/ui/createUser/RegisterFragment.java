@@ -91,7 +91,7 @@ public class RegisterFragment extends Fragment {
 
         // User registration using api call
         Call<ResponseBody> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .createUser(email, uid, pwd);
 

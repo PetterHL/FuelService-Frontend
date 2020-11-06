@@ -54,7 +54,7 @@ public class FuelStationFragment extends Fragment {
     public void setItemsList() {
 
         Call<List<FuelStations>> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .getAllStations();
 
@@ -63,9 +63,10 @@ public class FuelStationFragment extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
-                    System.out.println(response.body().toString());
-                    adapter.setFuelStations(fuelStations);
                     System.out.println("HEI");
+                    System.out.println(response.body().toString());
+                    System.out.println("HEI");
+                    adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
 
                 } else {

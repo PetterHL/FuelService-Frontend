@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.Fuel.fuelservice.ui.Maps.MapActivity;
+import com.Fuel.fuelservice.ui.MyCar.MyCar;
 import com.google.android.gms.maps.GoogleMap;
 
 import com.Fuel.fuelservice.preference.UserPrefs;
@@ -108,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 userPrefs.setToken("");
                 finish();
                 startActivity(getIntent());
+                break;
+            case R.id.nav_MyCar:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new MyCar()).commit();
                 break;
         }
         drawerLayout.closeDrawer((GravityCompat.START));

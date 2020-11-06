@@ -13,27 +13,39 @@ public class ApiClient {
     //URL AT Daniel HOME
     private static final String BASE_URL = "http://192.168.1.3:8080/FuelService/api/";
 
+    private static final String CAR_URL = "http://no.registreringsnummerapi.com/api/reg.asmx/";
+
     private static ApiClient SINGLETON;
     Retrofit retrofit = null;
 
 
-    public ApiClient() {
+    public ApiClient(boolean car) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
+        if(car) {
+            System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222222");
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(CAR_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+        } else {
+            System.out.println("3333333333333333333333333333333333333333333333333333333333333333333333333333333333");
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+        }
     }
 
-    // Checks if an instance has been created or not
-    public static synchronized ApiClient getSINGLETON() {
-        if (SINGLETON == null) {
-            SINGLETON = new ApiClient();
-        }
+    public static synchronized ApiClient getSINGLETON(boolean car) {
+        SINGLETON = null;
+
+        SINGLETON = new ApiClient(car);
+
         return SINGLETON;
     }
 

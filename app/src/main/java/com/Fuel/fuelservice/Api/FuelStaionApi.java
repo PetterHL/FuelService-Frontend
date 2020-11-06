@@ -29,6 +29,9 @@ public interface FuelStaionApi {
     @GET("service/stations")
     public Call<List<FuelStations>> getAllStations();
 
+    @GET("CheckNorway")
+    public Call<ResponseBody> getCar(@Query("RegistrationNumber") String RegistrationNumber,
+                                     @Query("username") String username);
 }
 
 
