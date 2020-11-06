@@ -16,20 +16,25 @@ import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
+import com.Fuel.fuelservice.preference.UserPrefs;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.zip.Inflater;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     private TextView textViewName, textViewPetrolPrice, textViewDieselPrice;
-    Bundle bundle = this.getArguments();
+    private String bundleName;
+    private User user;
+
 
     public BottomSheetFragment() {
     }
@@ -44,8 +49,17 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         textViewName = view.findViewById(R.id.tvStationName);
         textViewPetrolPrice = view.findViewById(R.id.tvPetrolPrice);
         textViewDieselPrice = view.findViewById(R.id.tvDieselPrice);
-
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String name = bundle.getString("FuelStation");
+            String dieselPrice = bundle.getString("DieselPrice");
+            String petrolPrice = bundle.getString("PetrolPrice");
+            bundleName = name;
+            System.out.println("tvStationName" + bundleName);
+            textViewName.setText(bundleName);
+            textViewPetrolPrice.setText(dieselPrice);
+            textViewDieselPrice.setText(petrolPrice);
+        }
 
         CheckBox chk = (CheckBox) view.findViewById(R.id.favorite);
         chk.setOnClickListener(new View.OnClickListener() {
@@ -53,35 +67,56 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 boolean checked = ((CheckBox) v).isChecked();
                 // Check which checkbox was clicked
-                if (checked){
-                    Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
-                        /*    User user = new User();
-                        String stationName = bundle.getString("FuelStation");
-                        user.addFavoriteStation(stationName);
-                        System.out.println(user);*/
-                }
-                else{
+                if (checked) {
+
+                    addFavorite();
+
+                    //System.out.println(user);
+                } else {
                     Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        if (bundle != null) {
-            String name = bundle.getString("FuelStation");
-            String dieselPrice = bundle.getString("DieselPrice");
-            String petrolPrice = bundle.getString("PetrolPrice");
-            System.out.println("tvStationName" + name);
 
-            textViewName.setText(name);
-            textViewPetrolPrice.setText(dieselPrice);
-            textViewDieselPrice.setText(petrolPrice);
-        }
         return view;
     }
 
+    public void addFavorite() {
+
+        Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
+        System.out.println(bundleName);
+        new User();
+        UserPrefs userPrefs = new UserPrefs(getContext());
+        String token = "Bearer " + userPrefs.getToken();
+        // User registration using api call
+        Call<ResponseBody> call = ApiClient
+                .getSINGLETON()
+                .getApi()
+                .getCurrentUser(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        response.body().string();
+                        user.addFavoriteStation(bundleName);
+                        System.out.println(response);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
 
 
-
-
+        });
+    }
 }
 
 
