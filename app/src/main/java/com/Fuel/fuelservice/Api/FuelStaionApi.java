@@ -29,6 +29,9 @@ public interface FuelStaionApi {
     @GET("service/stations")
     public Call<List<FuelStations>> getAllStations();
 
+    @GET("auth/currentuser")
+    public Call<ResponseBody> getCurrentUser();
+
 }
 
 
