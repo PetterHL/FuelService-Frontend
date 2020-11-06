@@ -1,24 +1,14 @@
 package com.Fuel.fuelservice.ui.Maps;
-import android.app.Activity;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
-import com.Fuel.fuelservice.ApiClient;
-import com.Fuel.fuelservice.MainActivity;
+import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.fragment.BottomSheetFragment;
-import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,8 +23,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static androidx.fragment.app.FragmentActivity.*;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
