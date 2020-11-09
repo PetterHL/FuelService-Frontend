@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.Inflater;
 
 import okhttp3.ResponseBody;
@@ -86,7 +87,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
         System.out.println(bundleName);
         new User();
-        UserPrefs userPrefs = new UserPrefs(getContext());
+        UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
         // User registration using api call
         Call<ResponseBody> call = ApiClient

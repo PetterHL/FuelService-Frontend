@@ -64,6 +64,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
             bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
                 FuelStations fuelStation = fuelStations.get(position);
 
+                String fuelStationId    = String.valueOf(fuelStation.getId());
                 String fuelStationName = fuelStation.getName();
                 String petrolString = String.valueOf(fuelStation.getPetrolPrice());
                 String dieselString = String.valueOf(fuelStation.getDieselPrice());
@@ -71,6 +72,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
                 Intent intent = new Intent(context, BottomSheetFragment.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("FuelStationId", fuelStationId);
                 bundle.putString("FuelStation", fuelStationName);
                 bundle.putString("DieselPrice", petrolString);
                 bundle.putString("PetrolPrice", dieselString);
