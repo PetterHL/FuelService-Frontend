@@ -85,15 +85,17 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     public void addFavorite() {
 
         Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
-        System.out.println(bundleName);
-        new User();
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        String id = bundle.getString("FuelStationId");
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
+
         // User registration using api call
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON()
                 .getApi()
-                .getCurrentUser(token);
+                .setFavorite(token, id);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -101,7 +103,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 if (response.isSuccessful()) {
                     try {
                         response.body().string();
-                        user.addFavoriteStation(bundleName);
                         System.out.println(response);
 
                     } catch (IOException e) {
