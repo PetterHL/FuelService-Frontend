@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
+import com.Fuel.fuelservice.preference.UserPrefs;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -156,10 +157,15 @@ public class MyCar extends Fragment {
     }
 
     public void addCar(String RegNumber, String manufacturer, String model, boolean petrol) {
+
+        UserPrefs userPrefs = new UserPrefs(getContext());
+
+        String token = "Bearer " + userPrefs.getToken();
+
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
-                .addCar(RegNumber, manufacturer, model, petrol);
+                .addCar(token, RegNumber, manufacturer, model, petrol);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -208,8 +214,6 @@ public class MyCar extends Fragment {
     }
 
     private static void parseNewsJsonObject(JsonObject object){
-        String timeWrittenString = object.get("Description").getAsString();
-        String lastUpdatedString = object.get("RegistrationYear").getAsString();
 
         JsonObject carInfo = object.getAsJsonObject("ExtendedInformation");
 
