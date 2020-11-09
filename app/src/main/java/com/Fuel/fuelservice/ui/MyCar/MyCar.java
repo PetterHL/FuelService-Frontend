@@ -6,30 +6,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
-import com.Fuel.fuelservice.ui.home.FuelStationFragment;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.w3c.dom.Document;
-import org.xml.sax.XMLReader;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpCookie;
+import java.util.function.ToDoubleBiFunction;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,7 +43,14 @@ import retrofit2.Response;
 
 public class MyCar extends Fragment {
 
-    EditText editTextUsername, editTextPwd;
+    static EditText regnumber_field;
+    static EditText manufacturer_field;
+    static EditText model_field;
+    static RadioButton petrol_radio, diesel_radio;
+    static RadioGroup radioGroup;
+
+    Button search_car_button;
+
     private User user = new User();
 
     @Nullable
@@ -50,24 +58,66 @@ public class MyCar extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_car, container, false);
 
-        editTextUsername = view.findViewById(R.id.editTextUsernameOnLogin);
-        editTextPwd = view.findViewById(R.id.editTextTextPassword);
+        regnumber_field = view.findViewById(R.id.RegNumber_field);
+        manufacturer_field = view.findViewById(R.id.manufacturer_field);
+        model_field = view.findViewById(R.id.model_field);
+
+        petrol_radio = view.findViewById(R.id.petrol_radio);
+        diesel_radio = view.findViewById(R.id.diesel_radio);
+
+        radioGroup = view.findViewById(R.id.RadioGroup);
 
 
 
+        search_car_button = view.findViewById(R.id.search_car_button);
+
+        Button searchCar = view.findViewById(R.id.search_car_button);
+        Button registerCar = view.findViewById(R.id.register_car_button);
 
 
-        Button loginBtn = (Button) view.findViewById(R.id.loginbtn);
 
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        searchCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.loginbtn:
-                        sendRequest();
-                        break;
+                sendRequest();
+            }
+        });
+
+        registerCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String RegNumber = regnumber_field.getText().toString();
+                String manufacturer = manufacturer_field.getText().toString();
+                String model = model_field.getText().toString();
+
+                boolean petrol = true;
+
+                if (RegNumber.isEmpty()) {
+                    regnumber_field.setError("Please enter a registration number");
+                    regnumber_field.requestFocus();
+                    return;
                 }
+
+                if (manufacturer.isEmpty()) {
+                    manufacturer_field.setError("Please enter an manufacturer!");
+                    manufacturer_field.requestFocus();
+                    return;
+                }
+
+                if (model.isEmpty()) {
+                    model_field.setError("Please enter a model");
+                    model_field.requestFocus();
+                    return;
+                }
+
+                if(petrol_radio.isChecked()) {
+                    petrol = true;
+                } else if(diesel_radio.isChecked()) {
+                    petrol = false;
+                }
+
+                addCar(RegNumber, manufacturer, model, petrol);
             }
         });
 
@@ -75,28 +125,25 @@ public class MyCar extends Fragment {
     }
 
     public void sendRequest() {
+
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON(true)
                 .getApi()
-                .getCar("Zt49510", "Hei123");
+                .getCar(regnumber_field.getText().toString(), "Test696969");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-
-                    System.out.println(response.body());
-
-                    Fragment newFragment = new FuelStationFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    try {
+                        Parse(response.body().string());
 
 
-                    Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_LONG).show();
-                    fragmentTransaction.replace(R.id.fragment_contatiner, newFragment).commit();
-
-
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), "Login Failed, please try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Fuck you bitch", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -107,4 +154,80 @@ public class MyCar extends Fragment {
 
         });
     }
+
+    public void addCar(String RegNumber, String manufacturer, String model, boolean petrol) {
+        Call<ResponseBody> call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .addCar(RegNumber, manufacturer, model, petrol);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("NICE");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void Parse(String xml) {
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        InputSource is;
+
+        try {
+            builder = factory.newDocumentBuilder();
+            is = new InputSource(new StringReader(xml));
+            Document doc = builder.parse(is);
+            NodeList list = doc.getElementsByTagName("vehicleJson");
+
+            String xml2 = list.item(0).getTextContent();
+
+            parseNews(xml2);
+
+        } catch (ParserConfigurationException e) {
+            System.out.println("feil1");
+        } catch (IOException e) {
+            System.out.println("feil3");
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void parseNews(String jsonLine){
+        JsonElement jsonElement = new JsonParser().parse(jsonLine);
+        parseNewsJsonObject(jsonElement.getAsJsonObject());
+    }
+
+    private static void parseNewsJsonObject(JsonObject object){
+        String timeWrittenString = object.get("Description").getAsString();
+        String lastUpdatedString = object.get("RegistrationYear").getAsString();
+
+        JsonObject carInfo = object.getAsJsonObject("ExtendedInformation");
+
+        String manufacturer = carInfo.get("Name").getAsString();
+        String model = carInfo.get("modell").getAsString();
+        int bensin = carInfo.get("drivst").getAsInt();
+
+
+        manufacturer_field.setText(manufacturer);
+        model_field.setText(model);
+
+        if(bensin == 1) {
+            petrol_radio.setChecked(true);
+        } else if(bensin == 2) {
+            diesel_radio.setChecked(true);
+        }
+
+
+    }
+
 }

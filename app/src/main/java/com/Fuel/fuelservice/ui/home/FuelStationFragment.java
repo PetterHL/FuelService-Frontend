@@ -47,8 +47,6 @@ public class FuelStationFragment extends Fragment {
         getFuelStations();
         return view;
 
-
-
     }
 
     public void setItemsList() {
@@ -63,12 +61,7 @@ public class FuelStationFragment extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
-                    System.out.println("HEI");
-                    System.out.println(response.body().toString());
-                    System.out.println("HEI");
                     adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
-
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
                 }

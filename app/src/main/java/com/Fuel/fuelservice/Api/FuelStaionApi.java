@@ -29,6 +29,13 @@ public interface FuelStaionApi {
     @GET("service/stations")
     public Call<List<FuelStations>> getAllStations();
 
+    @FormUrlEncoded
+    @POST("service/addCar")
+    public Call<ResponseBody> addCar(@Field("RegNumber") String RegNumber,
+                                     @Field("manufacturer") String manufacturer,
+                                     @Field("model") String model,
+                                     @Field("petrol") boolean petrol);
+
     @GET("CheckNorway")
     public Call<ResponseBody> getCar(@Query("RegistrationNumber") String RegistrationNumber,
                                      @Query("username") String username);

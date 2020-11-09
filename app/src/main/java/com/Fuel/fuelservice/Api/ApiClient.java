@@ -25,14 +25,12 @@ public class ApiClient {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         if(car) {
-            System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222222");
             retrofit = new Retrofit.Builder()
                     .baseUrl(CAR_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
         } else {
-            System.out.println("3333333333333333333333333333333333333333333333333333333333333333333333333333333333");
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
