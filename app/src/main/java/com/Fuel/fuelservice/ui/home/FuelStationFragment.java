@@ -65,7 +65,6 @@ public class FuelStationFragment extends Fragment {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
-                    System.out.println("HEI");
                     System.out.println(fuelStations.size());
 
                 } else {
@@ -76,6 +75,59 @@ public class FuelStationFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+            }
+        });
+    }
+    public void setFavoritedItemList(){
+
+        Call<List<FuelStations>> call = ApiClient
+                .getSINGLETON()
+                .getApi()
+                .getAllFavoritedStaions();
+        call.enqueue(new Callback<List<FuelStations>>() {
+            @Override
+            public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
+                if (response.isSuccessful()) {
+                    fuelStations = (ArrayList<FuelStations>) response.body();
+                    System.out.println(response.body().toString());
+                    adapter.setFuelStations(fuelStations);
+                    System.out.println(fuelStations.size());
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public void setNearbyStationsItemList(){
+        Call<List<FuelStations>> call = ApiClient
+                .getSINGLETON()
+                .getApi()
+                .getAllStations();
+        call.enqueue(new Callback<List<FuelStations>>() {
+            @Override
+            public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
+                if (response.isSuccessful()) {
+                    fuelStations = (ArrayList<FuelStations>) response.body();
+                    System.out.println(response.body().toString());
+                    adapter.setFuelStations(fuelStations);
+                    System.out.println(fuelStations.size());
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+
             }
         });
     }

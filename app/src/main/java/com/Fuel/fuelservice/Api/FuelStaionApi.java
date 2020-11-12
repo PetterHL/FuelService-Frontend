@@ -39,6 +39,10 @@ public interface FuelStaionApi {
     public Call<ResponseBody> setFavorite(@Header("Authorization") String token,
                                           @Field("id") String id);
 
+    @GET("service/favoriteStations")
+    public Call<List<FuelStations>> getAllFavoritedStaions();
+
+
 }
 
 
