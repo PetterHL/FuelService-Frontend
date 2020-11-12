@@ -4,7 +4,8 @@
     android:id="@+id/nav_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:gravity="center"
+    android:padding="30dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -15,8 +16,56 @@
         android:layout_marginTop="60dp"
         android:scrollbars="vertical" />
 
-    <Button
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/nearbyButton"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/favoriteButton"
+        android:background="@drawable/radio_button_nearby_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:checked="true"
+        android:text="Nearby"
+        android:onClick="onRadioButtonClicked"
+        android:textColor="@android:color/white" />
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/cheapButton"
+        android:background="@drawable/radio_button_favorite_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:checked="false"
+        android:text="Favorite"
+        android:onClick="onRadioButtonClicked"
+        android:textColor="@android:color/holo_red_light" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/cheapButton"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="77dp"
+        android:background="@drawable/radio_button_cheapest_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/cheapest"
+        android:textColor="@android:color/holo_red_light" />
+
+
+    <!--<Button
         android:id="@+id/button"
+        android:checked = "true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
@@ -38,5 +87,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/cheapest" />
+        android:text="@string/cheapest" />-->
 </RelativeLayout>

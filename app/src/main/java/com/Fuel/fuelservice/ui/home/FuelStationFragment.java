@@ -1,13 +1,16 @@
 package com.Fuel.fuelservice.ui.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +32,7 @@ public class FuelStationFragment extends Fragment {
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
+    AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
     @Nullable
     @Override
@@ -36,6 +40,9 @@ public class FuelStationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fuelstations, container, false);
 
         itemRecyclerView = view.findViewById(R.id.recyclerView);
+        nearbyButton = view.findViewById(R.id.nearbyButton);
+        favoriteButton = view.findViewById(R.id.favoriteButton);
+        cheapButton = view.findViewById(R.id.cheapButton);
 
         setItemsList();
 
@@ -49,6 +56,33 @@ public class FuelStationFragment extends Fragment {
 
 
 
+    }
+
+    public void onRadioButtonClick (View view){
+        boolean isSelected = ((AppCompatRadioButton)view).isChecked();
+        switch (view.getId()) {
+            case R.id.nearbyButton:
+                if (isSelected) {
+                    nearbyButton.setTextColor(Color.WHITE);
+                    favoriteButton.setTextColor(Color.RED);
+                    cheapButton.setTextColor(Color.RED);
+                    setItemsList();
+                }
+            case R.id.favoriteButton:
+                if (isSelected) {
+                    nearbyButton.setTextColor(Color.RED);
+                    favoriteButton.setTextColor(Color.WHITE);
+                    cheapButton.setTextColor(Color.RED);
+                    setItemsList();
+                }
+            case R.id.cheapButton:
+                if (isSelected) {
+                    nearbyButton.setTextColor(Color.RED);
+                    favoriteButton.setTextColor(Color.RED);
+                    cheapButton.setTextColor(Color.WHITE);
+                    setItemsList();
+                }
+        }
     }
 
     public void setItemsList() {
