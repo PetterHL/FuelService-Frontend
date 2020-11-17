@@ -51,6 +51,9 @@ public class FuelStationFragment extends Fragment {
                 nearbyButton.setTextColor(Color.WHITE);
                 favoriteButton.setTextColor(Color.RED);
                 cheapButton.setTextColor(Color.RED);
+                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
+                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
+                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
 
                 setItemsList();
             }
@@ -61,6 +64,9 @@ public class FuelStationFragment extends Fragment {
                 nearbyButton.setTextColor(Color.RED);
                 favoriteButton.setTextColor(Color.WHITE);
                 cheapButton.setTextColor(Color.RED);
+                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
+                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
+                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
                 setFavoritedItemList();
             }
         });
@@ -70,6 +76,9 @@ public class FuelStationFragment extends Fragment {
                 nearbyButton.setTextColor(Color.RED);
                 favoriteButton.setTextColor(Color.RED);
                 cheapButton.setTextColor(Color.WHITE);
+                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_checked);
+                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
+                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
                 setItemsList();
             }
         });
