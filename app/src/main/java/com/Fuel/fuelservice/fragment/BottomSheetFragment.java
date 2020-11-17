@@ -1,5 +1,7 @@
 package com.Fuel.fuelservice.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         textViewName = view.findViewById(R.id.tvStationName);
         textViewPetrolPrice = view.findViewById(R.id.tvPetrolPrice);
         textViewDieselPrice = view.findViewById(R.id.tvDieselPrice);
-        Bundle bundle = this.getArguments();
+        final Bundle bundle = this.getArguments();
         if (bundle != null) {
             String name = bundle.getString("FuelStation");
             String dieselPrice = bundle.getString("DieselPrice");
@@ -63,18 +65,21 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             textViewDieselPrice.setText(petrolPrice);
         }
 
-        CheckBox chk = (CheckBox) view.findViewById(R.id.favorite);
-        chk.setOnClickListener(new View.OnClickListener() {
+       final CheckBox chk = (CheckBox) view.findViewById(R.id.favorite);
+         chk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chk.setChecked(loadToggle(getContext()));
                 boolean checked = ((CheckBox) v).isChecked();
+
                 // Check which checkbox was clicked
                 if (checked) {
-
+                    saveToggle(getContext(),checked);
                     addFavorite();
+                    Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
 
-                    //System.out.println(user);
                 } else {
+                    saveToggle(getContext(),checked);
                     Toast.makeText(getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -82,14 +87,22 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         return view;
     }
-
+    private static void saveToggle(Context context, boolean isToggled) {
+        SharedPreferences sharedPreferences  = context.getSharedPreferences("preferences", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("chk", isToggled).apply(); // value to store
+    }
+    private static Boolean loadToggle(Context context){
+        final SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("chk", true);
+    }
     public void addFavorite() {
 
         Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
         Bundle bundle = this.getArguments();
         assert bundle != null;
-        String FuelStationId = bundle.getString("FuelStationId");
-        System.out.println(FuelStationId);
+        String fuelStationId = bundle.getString("FuelStationId");
+        System.out.println(fuelStationId);
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
@@ -97,7 +110,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON()
                 .getApi()
-                .setFavorite(token, FuelStationId);
+                .setFavorite(token, fuelStationId);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
