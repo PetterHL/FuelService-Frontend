@@ -48,37 +48,21 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nearbyButton.setTextColor(Color.WHITE);
-                favoriteButton.setTextColor(Color.RED);
-                cheapButton.setTextColor(Color.RED);
-                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
-                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
-                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
-
+                setNearbyButton();
                 setItemsList();
             }
         });
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nearbyButton.setTextColor(Color.RED);
-                favoriteButton.setTextColor(Color.WHITE);
-                cheapButton.setTextColor(Color.RED);
-                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
-                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
-                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
+                setFavoriteButton();
                 setFavoritedItemList();
             }
         });
         cheapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nearbyButton.setTextColor(Color.RED);
-                favoriteButton.setTextColor(Color.RED);
-                cheapButton.setTextColor(Color.WHITE);
-                cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_checked);
-                nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
-                favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
+                setCheapButton();
                 setItemsList();
             }
         });
@@ -88,16 +72,37 @@ public class FuelStationFragment extends Fragment {
 
         itemRecyclerView.setAdapter(adapter);
         itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-        getFuelStations();
+
 
         return view;
-
-
 
     }
 
 
-
+    private void setNearbyButton(){
+        nearbyButton.setTextColor(Color.WHITE);
+        favoriteButton.setTextColor(Color.RED);
+        cheapButton.setTextColor(Color.RED);
+        cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
+        nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
+        favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
+    }
+    private void setFavoriteButton(){
+        nearbyButton.setTextColor(Color.RED);
+        favoriteButton.setTextColor(Color.WHITE);
+        cheapButton.setTextColor(Color.RED);
+        cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_unchecked);
+        nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
+        favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
+    }
+    private void setCheapButton(){
+        nearbyButton.setTextColor(Color.RED);
+        favoriteButton.setTextColor(Color.RED);
+        cheapButton.setTextColor(Color.WHITE);
+        cheapButton.setBackgroundResource(R.drawable.radio_button_cheapest_checked);
+        nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
+        favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
+    }
     public void setItemsList() {
 
         Call<List<FuelStations>> call = ApiClient
@@ -110,6 +115,7 @@ public class FuelStationFragment extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
+                    assert response.body() != null;
                     System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
@@ -138,6 +144,7 @@ public class FuelStationFragment extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
+                    assert response.body() != null;
                     System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
@@ -165,6 +172,7 @@ public class FuelStationFragment extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
+                    assert response.body() != null;
                     System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
@@ -181,7 +189,4 @@ public class FuelStationFragment extends Fragment {
         });
     }
 
-    public ArrayList<FuelStations> getFuelStations() {
-        return fuelStations;
-    }
 }

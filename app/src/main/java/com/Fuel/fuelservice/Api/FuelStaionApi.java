@@ -1,6 +1,7 @@
 package com.Fuel.fuelservice.Api;
 
 import com.Fuel.fuelservice.Objects.FuelStations;
+import com.google.android.gms.common.util.JsonUtils;
 
 import java.util.List;
 
@@ -34,10 +35,10 @@ public interface FuelStaionApi {
     @GET("auth/currentuser")
     public Call<ResponseBody> getCurrentUser(@Header("Authorization") String token);
 
-    @FormUrlEncoded
-    @POST("service/setFavorite")
+
+    @PUT("service/setFavorite")
     public Call<ResponseBody> setFavorite(@Header("Authorization") String token,
-                                          @Field("FuelStationId") String id);
+                                          @Query("FuelStationId") String id);
 
     @GET("service/favoriteStations")
     public Call<List<FuelStations>> getAllFavoritedStations(@Header("Authorization") String token);

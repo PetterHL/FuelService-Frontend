@@ -89,10 +89,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         Bundle bundle = this.getArguments();
         assert bundle != null;
         String FuelStationId = bundle.getString("FuelStationId");
+        System.out.println(FuelStationId);
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
-        // User registration using api call
+        // Adding favorite using api call
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON()
                 .getApi()
@@ -103,6 +104,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
+                        assert response.body() != null;
                         response.body().string();
                         System.out.println(response);
 
@@ -121,17 +123,3 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         });
     }
 }
-
-
-
-
-        /*public void setCurrentUser() {
-            Call<ResponseBody> call = ApiClient
-                    .getSINGLETON()
-                    .getApi()
-                    .getCurrentUser();
-        }*/
-
-
-
-
