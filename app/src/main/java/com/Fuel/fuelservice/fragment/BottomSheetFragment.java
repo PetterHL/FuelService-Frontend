@@ -88,7 +88,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         Toast.makeText(getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
         Bundle bundle = this.getArguments();
         assert bundle != null;
-        String id = bundle.getString("FuelStationId");
+        String FuelStationId = bundle.getString("FuelStationId");
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
@@ -96,7 +96,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON()
                 .getApi()
-                .setFavorite(token, id);
+                .setFavorite(token, FuelStationId);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

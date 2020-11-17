@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
+import com.Fuel.fuelservice.preference.UserPrefs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class FuelStationFragment extends Fragment {
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
+    private RadioGroup group;
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
     @Nullable
@@ -39,51 +42,68 @@ public class FuelStationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fuelstations, container, false);
 
+
+
         itemRecyclerView = view.findViewById(R.id.recyclerView);
         nearbyButton = view.findViewById(R.id.nearbyButton);
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
-
-        setItemsList();
+        group= (RadioGroup) getView().findViewById(R.id.radioGroup);
 
         adapter = new FuelStationRecViewAdapter(getContext());
-        adapter.setFuelStations(fuelStations);
 
-        itemRecyclerView.setAdapter(adapter);
-        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+
+
         getFuelStations();
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                switch (checkedId) {
+                    case R.id.nearbyButton:
+
+                        nearbyButton.setTextColor(Color.WHITE);
+                        favoriteButton.setTextColor(Color.RED);
+                        cheapButton.setTextColor(Color.RED);
+                        setItemsList();
+                        adapter.setFuelStations(fuelStations);
+                        itemRecyclerView.setAdapter(adapter);
+                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+
+
+
+                    case R.id.favoriteButton:
+
+                        nearbyButton.setTextColor(Color.RED);
+                        favoriteButton.setTextColor(Color.WHITE);
+                        cheapButton.setTextColor(Color.RED);
+                        setItemsList();
+                        adapter.setFuelStations(fuelStations);
+                        itemRecyclerView.setAdapter(adapter);
+                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+
+
+                    case R.id.cheapButton:
+
+                        nearbyButton.setTextColor(Color.RED);
+                        favoriteButton.setTextColor(Color.RED);
+                        cheapButton.setTextColor(Color.WHITE);
+                        setItemsList();
+                        adapter.setFuelStations(fuelStations);
+                        itemRecyclerView.setAdapter(adapter);
+                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+
+
+                }
+            }
+        });
         return view;
 
 
 
     }
 
-    public void onRadioButtonClick (View view){
-        boolean isSelected = ((AppCompatRadioButton)view).isChecked();
-        switch (view.getId()) {
-            case R.id.nearbyButton:
-                if (isSelected) {
-                    nearbyButton.setTextColor(Color.WHITE);
-                    favoriteButton.setTextColor(Color.RED);
-                    cheapButton.setTextColor(Color.RED);
-                    setItemsList();
-                }
-            case R.id.favoriteButton:
-                if (isSelected) {
-                    nearbyButton.setTextColor(Color.RED);
-                    favoriteButton.setTextColor(Color.WHITE);
-                    cheapButton.setTextColor(Color.RED);
-                    setItemsList();
-                }
-            case R.id.cheapButton:
-                if (isSelected) {
-                    nearbyButton.setTextColor(Color.RED);
-                    favoriteButton.setTextColor(Color.RED);
-                    cheapButton.setTextColor(Color.WHITE);
-                    setItemsList();
-                }
-        }
-    }
 
     public void setItemsList() {
 
@@ -112,12 +132,15 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
-    public void setFavoritedItemList(){
+    public void getAllFavoritedStations(){
 
+        UserPrefs userPrefs;
+        userPrefs = new UserPrefs(getContext());
+        String token = "Bearer " + userPrefs.getToken();
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON()
                 .getApi()
-                .getAllFavoritedStaions();
+                .getAllFavoritedStations(token);
         call.enqueue(new Callback<List<FuelStations>>() {
             @Override
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
