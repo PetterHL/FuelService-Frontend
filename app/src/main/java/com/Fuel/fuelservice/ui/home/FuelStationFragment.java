@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,75 +33,60 @@ public class FuelStationFragment extends Fragment {
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
-    private RadioGroup group;
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fuelstations, container, false);
-
-
-
+        setItemsList();
         itemRecyclerView = view.findViewById(R.id.recyclerView);
         nearbyButton = view.findViewById(R.id.nearbyButton);
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
-        group= (RadioGroup) getView().findViewById(R.id.radioGroup);
 
-        adapter = new FuelStationRecViewAdapter(getContext());
-
-
-
-        getFuelStations();
-
-        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onClick(View v) {
+                nearbyButton.setTextColor(Color.WHITE);
+                favoriteButton.setTextColor(Color.RED);
+                cheapButton.setTextColor(Color.RED);
 
-                switch (checkedId) {
-                    case R.id.nearbyButton:
-
-                        nearbyButton.setTextColor(Color.WHITE);
-                        favoriteButton.setTextColor(Color.RED);
-                        cheapButton.setTextColor(Color.RED);
-                        setItemsList();
-                        adapter.setFuelStations(fuelStations);
-                        itemRecyclerView.setAdapter(adapter);
-                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-
-
-
-                    case R.id.favoriteButton:
-
-                        nearbyButton.setTextColor(Color.RED);
-                        favoriteButton.setTextColor(Color.WHITE);
-                        cheapButton.setTextColor(Color.RED);
-                        setItemsList();
-                        adapter.setFuelStations(fuelStations);
-                        itemRecyclerView.setAdapter(adapter);
-                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-
-
-                    case R.id.cheapButton:
-
-                        nearbyButton.setTextColor(Color.RED);
-                        favoriteButton.setTextColor(Color.RED);
-                        cheapButton.setTextColor(Color.WHITE);
-                        setItemsList();
-                        adapter.setFuelStations(fuelStations);
-                        itemRecyclerView.setAdapter(adapter);
-                        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-
-
-                }
+                setItemsList();
             }
         });
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nearbyButton.setTextColor(Color.RED);
+                favoriteButton.setTextColor(Color.WHITE);
+                cheapButton.setTextColor(Color.RED);
+                setFavoritedItemList();
+            }
+        });
+        cheapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nearbyButton.setTextColor(Color.RED);
+                favoriteButton.setTextColor(Color.RED);
+                cheapButton.setTextColor(Color.WHITE);
+                setItemsList();
+            }
+        });
+
+        adapter = new FuelStationRecViewAdapter(getContext());
+        adapter.setFuelStations(fuelStations);
+
+        itemRecyclerView.setAdapter(adapter);
+        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        getFuelStations();
+
         return view;
 
 
 
     }
+
 
 
     public void setItemsList() {
@@ -132,11 +116,10 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
-    public void getAllFavoritedStations(){
-
-        UserPrefs userPrefs;
-        userPrefs = new UserPrefs(getContext());
+    public void setFavoritedItemList(){
+        UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
+
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON()
                 .getApi()
@@ -150,7 +133,7 @@ public class FuelStationFragment extends Fragment {
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
                 }
 
             }
