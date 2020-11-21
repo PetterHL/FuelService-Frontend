@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyCar extends Fragment {
+public class AddCar extends Fragment {
 
     static EditText regnumber_field;
     static EditText manufacturer_field;

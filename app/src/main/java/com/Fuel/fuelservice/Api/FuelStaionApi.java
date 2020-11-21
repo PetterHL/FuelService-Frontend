@@ -1,5 +1,6 @@
 package com.Fuel.fuelservice.Api;
 
+import com.Fuel.fuelservice.Objects.Car;
 import com.Fuel.fuelservice.Objects.FuelStations;
 
 import java.util.List;
@@ -29,6 +30,9 @@ public interface FuelStaionApi {
 
     @GET("service/stations")
     public Call<List<FuelStations>> getAllStations();
+
+    @GET("service/cars")
+    public  Call<List<Car>> getAllCars();
 
     @FormUrlEncoded
     @POST("service/addCar")

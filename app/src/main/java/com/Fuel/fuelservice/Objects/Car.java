@@ -2,8 +2,8 @@ package com.Fuel.fuelservice.Objects;
 
 public class Car {
 
-    private Long id;
-    private String RegNumber;
+    private Long carId;
+    private String regNumber;
     private int RegYear;
     private String manufacturer;
     private String model;
@@ -13,10 +13,10 @@ public class Car {
     public Car() {
     }
 
-    public Car(Long id, String regNumber, int regYear, String manufacturer, String model, boolean petrol, User carOwner) {
-        this.id = id;
-        RegNumber = regNumber;
-        RegYear = regYear;
+    public Car(Long carId, String regNumber, int regYear, String manufacturer, String model, boolean petrol, User carOwner) {
+        this.carId = carId;
+        this.regNumber = regNumber;
+        this.RegYear = regYear;
         this.manufacturer = manufacturer;
         this.model = model;
         this.petrol = petrol;
@@ -24,19 +24,19 @@ public class Car {
     }
 
     public Long getId() {
-        return id;
+        return carId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.carId = id;
     }
 
     public String getRegNumber() {
-        return RegNumber;
+        return regNumber;
     }
 
     public void setRegNumber(String regNumber) {
-        RegNumber = regNumber;
+        regNumber = regNumber;
     }
 
     public int getRegYear() {
@@ -82,8 +82,8 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + id +
-                ", RegNumber='" + RegNumber + '\'' +
+                "id=" + carId +
+                ", RegNumber='" + regNumber + '\'' +
                 ", RegYear=" + RegYear +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", model='" + model + '\'' +
