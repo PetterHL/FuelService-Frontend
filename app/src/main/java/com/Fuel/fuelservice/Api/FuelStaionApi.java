@@ -7,6 +7,7 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -39,6 +40,9 @@ public interface FuelStaionApi {
     @PUT("service/setFavorite")
     public Call<ResponseBody> setFavorite(@Header("Authorization") String token,
                                           @Query("FuelStationId") String id);
+    @GET("service/removeFavorite")
+    public Call<ResponseBody> removeFavorite(@Header("Authorization") String token,
+                                          @Query("fuelStationId") String id);
 
     @GET("service/favoriteStations")
     public Call<List<FuelStations>> getAllFavoritedStations(@Header("Authorization") String token);
