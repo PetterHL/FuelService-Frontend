@@ -8,19 +8,20 @@
     android:padding="10dp"
     android:layout_marginBottom="1dp">
 
-
     <ImageView
         android:id="@+id/icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="230dp"
         android:layout_marginTop="40dp"
+
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="402dp"
         android:layout_height="283dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
 
 
         <View
