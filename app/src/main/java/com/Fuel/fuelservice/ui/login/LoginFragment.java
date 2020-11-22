@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
 
 
         Call<ResponseBody> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .userLogin(uid, pwd);
 

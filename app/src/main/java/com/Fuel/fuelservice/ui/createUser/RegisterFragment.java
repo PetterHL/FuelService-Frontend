@@ -78,6 +78,7 @@ public class RegisterFragment extends Fragment {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editEmail.setError("Please enter a valid email!");
             editEmail.requestFocus();
+            return;
         }
 
         if (pwd.isEmpty()) {
@@ -86,14 +87,10 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        if (pwd.length() < 3) {
-            editPassword.setError("Password should be at least 3 characters long!");
-            editPassword.requestFocus();
-        }
 
         // User registration using api call
         Call<ResponseBody> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .createUser(email, uid, pwd);
 

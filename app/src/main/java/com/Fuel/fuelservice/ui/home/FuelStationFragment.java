@@ -106,7 +106,7 @@ public class FuelStationFragment extends Fragment {
     public void setItemsList() {
 
         Call<List<FuelStations>> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .getAllStations();
 

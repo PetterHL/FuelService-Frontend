@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.ui.Maps.MapActivity;
+import com.Fuel.fuelservice.ui.MyCar.MyCars;
 import com.google.android.gms.maps.GoogleMap;
 
 import com.Fuel.fuelservice.preference.UserPrefs;
@@ -28,6 +30,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -108,6 +115,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 userPrefs.setToken("");
                 finish();
                 startActivity(getIntent());
+                break;
+            case R.id.nav_MyCar:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new MyCars()).commit();
                 break;
         }
         drawerLayout.closeDrawer((GravityCompat.START));

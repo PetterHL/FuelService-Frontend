@@ -120,7 +120,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void setFuelStationsList() {
 
         Call<List<FuelStations>> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .getAllStations();
 
