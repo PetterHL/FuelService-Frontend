@@ -135,8 +135,10 @@ public class FuelStationFragment extends Fragment {
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
+        Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
+
         Call<List<FuelStations>> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .getAllFavoritedStations(token);
         call.enqueue(new Callback<List<FuelStations>>() {
@@ -150,6 +152,8 @@ public class FuelStationFragment extends Fragment {
                     System.out.println(fuelStations.size());
                 } else {
                     Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
+                    fuelStations.clear();
+                    adapter.setFuelStations(fuelStations);
                 }
 
             }
@@ -164,7 +168,7 @@ public class FuelStationFragment extends Fragment {
 
     public void setNearbyStationsItemList(){
         Call<List<FuelStations>> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .getAllStations();
         call.enqueue(new Callback<List<FuelStations>>() {

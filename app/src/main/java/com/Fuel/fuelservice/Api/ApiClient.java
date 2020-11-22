@@ -9,9 +9,9 @@ public class ApiClient {
     //URL AT SCHOOL
     //private static final String BASE_URL = "http://10.22.193.141:8080/FuelService/api/";
     //URL AT Petter HOME
-    private static final String BASE_URL = "http://10.0.0.21:8080/FuelService/api/";
+    //private static final String BASE_URL = "http://10.0.0.21:8080/FuelService/api/";
     //URL AT Daniel HOME
-    //private static final String BASE_URL = "http://192.168.1.3:8080/FuelService/api/";
+    private static final String BASE_URL = "http://192.168.1.3:8080/FuelService/api/";
 
     private static final String CAR_URL = "http://no.registreringsnummerapi.com/api/reg.asmx/";
 
