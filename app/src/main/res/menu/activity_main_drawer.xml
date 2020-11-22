@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
@@ -8,7 +9,8 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_baseline_apps_24"
             android:title="@string/menu_prices"
-            android:visible="true"/>
+            android:visible="true"
+            app:itemTextColor="@android:color/holo_red_light"/>
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_baseline_map_24"
@@ -18,7 +20,7 @@
 
     <group
         android:id="@+id/menu_bottom"
-        android:checkableBehavior="none">
+        android:checkableBehavior="single">
 
 
         <item
@@ -40,7 +42,7 @@
 
     <group
         android:id="@+id/menu_middle"
-        android:checkableBehavior="none">
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_baseline_person_24"
@@ -53,7 +55,8 @@
             android:visible="true"/>
     </group>
 
-    <group>
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"

@@ -133,7 +133,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         // Adding favorite using api call
         Call<ResponseBody> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .setFavorite(token, FuelStationId);
 
@@ -171,7 +171,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
         // Removing favorite using api call
         Call<ResponseBody> call = ApiClient
-                .getSINGLETON()
+                .getSINGLETON(false)
                 .getApi()
                 .removeFavorite(token, fuelStationId);
 
