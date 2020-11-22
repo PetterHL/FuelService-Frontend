@@ -20,6 +20,7 @@ import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -42,11 +43,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCar extends Fragment {
+public class AddCar extends BottomSheetDialogFragment {
 
     static EditText regnumber_field;
-    static EditText manufacturer_field;
-    static EditText model_field;
+    static EditText field_manufacturer;
+    static EditText field_model;
     static RadioButton petrol_radio, diesel_radio;
     static RadioGroup radioGroup;
 
@@ -57,18 +58,16 @@ public class AddCar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_car, container, false);
+        View view = inflater.inflate(R.layout.addcar_sheet, container, false);
 
         regnumber_field = view.findViewById(R.id.RegNumber_field);
-        manufacturer_field = view.findViewById(R.id.manufacturer_field);
-        model_field = view.findViewById(R.id.model_field);
+        field_manufacturer = view.findViewById(R.id.field_manufacturer);
+        field_model = view.findViewById(R.id.field_model);
 
         petrol_radio = view.findViewById(R.id.petrol_radio);
         diesel_radio = view.findViewById(R.id.diesel_radio);
 
         radioGroup = view.findViewById(R.id.RadioGroup);
-
-
 
         search_car_button = view.findViewById(R.id.search_car_button);
 
@@ -89,8 +88,8 @@ public class AddCar extends Fragment {
             public void onClick(View view) {
 
                 String RegNumber = regnumber_field.getText().toString();
-                String manufacturer = manufacturer_field.getText().toString();
-                String model = model_field.getText().toString();
+                String manufacturer = field_manufacturer.getText().toString();
+                String model = field_model.getText().toString();
 
                 boolean petrol = true;
 
@@ -101,14 +100,14 @@ public class AddCar extends Fragment {
                 }
 
                 if (manufacturer.isEmpty()) {
-                    manufacturer_field.setError("Please enter an manufacturer!");
-                    manufacturer_field.requestFocus();
+                    field_manufacturer.setError("Please enter an manufacturer!");
+                    field_manufacturer.requestFocus();
                     return;
                 }
 
                 if (model.isEmpty()) {
-                    model_field.setError("Please enter a model");
-                    model_field.requestFocus();
+                    field_model.setError("Please enter a model");
+                    field_model.requestFocus();
                     return;
                 }
 
@@ -130,7 +129,7 @@ public class AddCar extends Fragment {
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON(true)
                 .getApi()
-                .getCar(regnumber_field.getText().toString(), "Test696969");
+                .getCar(regnumber_field.getText().toString(), "Test123123");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -144,7 +143,7 @@ public class AddCar extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Fuck you bitch", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -171,7 +170,6 @@ public class AddCar extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("NICE");
                 }
             }
 
@@ -194,14 +192,12 @@ public class AddCar extends Fragment {
             Document doc = builder.parse(is);
             NodeList list = doc.getElementsByTagName("vehicleJson");
 
-            String xml2 = list.item(0).getTextContent();
+            String xml_Item = list.item(0).getTextContent();
 
-            parseNews(xml2);
+            parseNews(xml_Item);
 
         } catch (ParserConfigurationException e) {
-            System.out.println("feil1");
         } catch (IOException e) {
-            System.out.println("feil3");
         } catch (SAXException e) {
             e.printStackTrace();
         }
@@ -219,15 +215,15 @@ public class AddCar extends Fragment {
 
         String manufacturer = carInfo.get("Name").getAsString();
         String model = carInfo.get("modell").getAsString();
-        int bensin = carInfo.get("drivst").getAsInt();
+        int petrol = carInfo.get("drivst").getAsInt();
 
 
-        manufacturer_field.setText(manufacturer);
-        model_field.setText(model);
+        field_manufacturer.setText(manufacturer);
+        field_model.setText(model);
 
-        if(bensin == 1) {
+        if(petrol == 1) {
             petrol_radio.setChecked(true);
-        } else if(bensin == 2) {
+        } else if(petrol == 2) {
             diesel_radio.setChecked(true);
         }
 

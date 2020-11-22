@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Fuel.fuelservice.Objects.Car;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.fragment.BottomSheetFragment;
+import com.Fuel.fuelservice.fragment.CarSheetFragment;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -52,10 +53,6 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        String carInfo =
-                cars.get(position).getModel()) +  +
-                cars.get(position).getManufacturer());
-
         holder.StationTitle.setText(cars.get(position).getRegNumber().toUpperCase());
         holder.PetrolPrice.setText(cars.get(position).getModel());
         holder.DieselPrice.setText(cars.get(position).getManufacturer());
@@ -67,23 +64,34 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
             public void onClick(View view) {
                 // Enter specific item
 
-                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-                bottomSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), bottomSheetFragment.getTag());
+                CarSheetFragment carSheetFragment = new CarSheetFragment();
+                carSheetFragment.show(((FragmentActivity)context).getSupportFragmentManager(), carSheetFragment.getTag());
                 Car car = cars.get(position);
 
-                String fuelStationName = car.getRegNumber();
-                String petrolString = String.valueOf(car.getModel());
-                String dieselString = String.valueOf(car.getManufacturer());
+                String fuelType;
+
+                if(car.isPetrol()) {
+                    fuelType = "Petrol";
+                } else {
+                    fuelType = "Diesel";
+                }
+
+                String regNumber = car.getRegNumber().toUpperCase();
+
+                String model = String.valueOf(car.getModel()).toUpperCase();
+                String manufacturer = String.valueOf(car.getManufacturer()).toUpperCase();
+
+                String manufacturerModel = manufacturer+ " " + model;
 
 
-                Intent intent = new Intent(context, BottomSheetFragment.class);
+                Intent intent = new Intent(context, CarSheetFragment.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("FuelStation", fuelStationName);
-                bundle.putString("DieselPrice", petrolString);
-                bundle.putString("PetrolPrice", dieselString);
+                bundle.putString("regNumber", regNumber);
+                bundle.putString("manufacturer_model", manufacturerModel);
+                bundle.putString("PetrolPrice", fuelType);
                 intent.putExtra("myPackage", bundle);
 
-                bottomSheetFragment.setArguments(bundle);
+                carSheetFragment.setArguments(bundle);
 
             }
         });

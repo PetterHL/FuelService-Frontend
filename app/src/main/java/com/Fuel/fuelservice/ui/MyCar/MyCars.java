@@ -1,5 +1,7 @@
 package com.Fuel.fuelservice.ui.MyCar;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +23,10 @@ import com.Fuel.fuelservice.Objects.Car;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
+import com.Fuel.fuelservice.fragment.BottomSheetFragment;
+import com.Fuel.fuelservice.preference.UserPrefs;
+import com.Fuel.fuelservice.ui.home.FuelStationFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +43,25 @@ public class MyCars extends Fragment {
     public ArrayList<Car> cars = new ArrayList<>();
     private CarRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
+    private FloatingActionButton addCarButton;
+
+    private Context context;
+
+    public MyCars(Context context) {
+        this.context = context;
+    }
+
+    public MyCars() {
+    }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_mycars, container, false);
 
         itemRecyclerView = view.findViewById(R.id.recyclerView);
+        addCarButton = view.findViewById(R.id.add_car_button);
 
         setItemsList();
 
@@ -53,15 +71,30 @@ public class MyCars extends Fragment {
         itemRecyclerView.setAdapter(adapter);
         itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
         getCars();
+
+        addCarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddCar addCar = new AddCar();
+                addCar.show(getChildFragmentManager(), "addCar");
+
+            }
+        });
+
+
         return view;
     }
 
     public void setItemsList() {
 
+        UserPrefs userPrefs = new UserPrefs(getContext());
+
+        String token = "Bearer " + userPrefs.getToken();
+
         Call<List<Car>> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
-                .getAllCars();
+                .getOwnerCars(token);
 
         call.enqueue(new Callback<List<Car>>() {
             @Override

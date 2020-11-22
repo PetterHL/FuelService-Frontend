@@ -32,7 +32,10 @@ public interface FuelStaionApi {
     public Call<List<FuelStations>> getAllStations();
 
     @GET("service/cars")
-    public  Call<List<Car>> getAllCars();
+    public Call<List<Car>> getAllCars();
+
+    @GET("service/getOwnerCar")
+    public Call<List<Car>> getOwnerCars(@Header("Authorization") String Token);
 
     @FormUrlEncoded
     @POST("service/addCar")
