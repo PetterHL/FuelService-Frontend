@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="30dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:scrollbars="vertical" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="60dp"
+        android:orientation="horizontal" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/nearbyButton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/favoriteButton"
+        android:background="@drawable/radio_button_nearby_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:checked="true"
+        android:text="Nearby"
+        android:onClick="onRadioButtonClicked"
+        android:textColor="@android:color/white" />
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/cheapButton"
+        android:background="@drawable/radio_button_favorite_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:checked="false"
+        android:text="Favorite"
+        android:onClick="onRadioButtonClicked"
+        android:textColor="@android:color/holo_red_light" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/cheapButton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/radio_button_cheapest_selector"
+        android:button="@android:color/transparent"
+        android:gravity="center"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/cheapest"
+        android:textColor="@android:color/holo_red_light" />
+
+
+    <!--<Button
+        android:id="@+id/button"
+        android:checked = "true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/button3"
+        android:text="@string/nearby2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="50dp"
+        android:layout_toEndOf="@+id/button3"
+        android:text="@string/favorites" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/cheapest" />-->
+</RelativeLayout>
