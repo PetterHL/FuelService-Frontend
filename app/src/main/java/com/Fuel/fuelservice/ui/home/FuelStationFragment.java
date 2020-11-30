@@ -20,6 +20,9 @@ import com.Fuel.fuelservice.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
+import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,10 @@ public class FuelStationFragment extends Fragment {
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
+
+    UserPositionFinder userPositionFinder;
+    private LatLng userPosition;
+    private LatLng stationPosition;
 
     @Nullable
     @Override
@@ -75,7 +82,6 @@ public class FuelStationFragment extends Fragment {
 
 
         return view;
-
     }
 
 
@@ -116,10 +122,8 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
+                    updateDistances();
                     adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
-
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
                 }
@@ -192,5 +196,37 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
+
+    public void updateDistances() {
+        userPositionFinder = new UserPositionFinder(getActivity());
+        userPosition = userPositionFinder.getLastLocation();
+
+        for(FuelStations fuelStations: fuelStations) {
+            //Splits the coordinateString to an array
+            String [] value = fuelStations.getCoordinates().split(",");
+
+            //Changes the values from String to double
+            double coordNorth = Double.valueOf(value[0]);
+            double coordWest = Double.valueOf(value[1]);
+
+            stationPosition = new LatLng(coordNorth, coordWest);
+
+            double distance;
+
+            System.out.println(stationPosition);
+            System.out.println(userPosition);
+
+            System.out.println("##################");
+
+            distance = SphericalUtil.computeDistanceBetween(userPosition, stationPosition);
+
+            fuelStations.setUserDistance(distance/1000);
+
+            System.out.println(fuelStations.getUserDistance());
+
+        }
+    }
+
+
 
 }
