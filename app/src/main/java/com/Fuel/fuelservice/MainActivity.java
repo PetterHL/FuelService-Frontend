@@ -25,6 +25,7 @@ import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.ui.Maps.MapActivity;
 import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
 import com.Fuel.fuelservice.ui.MyCar.MyCars;
+import com.Fuel.fuelservice.ui.TripCalculator;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -99,9 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        System.out.println("1111111111111111111111111");
-
-
         updateOnStartUp();
 
         //  Set which fragment to run when the app opens
@@ -151,6 +149,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 userPrefs.setToken("");
                 finish();
                 startActivity(getIntent());
+                break;
+            case R.id.nav_stats:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new TripCalculator()).commit();
                 break;
             case R.id.nav_MyCar:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,

@@ -56,7 +56,7 @@ public class FuelStationFragment extends Fragment {
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
-    AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
+    AppCompatRadioButton nearbyButton, favoriteButton, cheapButton;
 
     private float menuSelect = 1;
 
@@ -79,11 +79,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
 
-        System.out.println("6966969696966969699696969");
-        System.out.println(getActivity());
-
         context = getContext();
-
 
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +110,14 @@ public class FuelStationFragment extends Fragment {
         adapter.setFuelStations(fuelStations);
 
         itemRecyclerView.setAdapter(adapter);
-        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
 
         return view;
     }
 
 
-    private void setNearbyButton(){
+    private void setNearbyButton() {
         nearbyButton.setTextColor(Color.WHITE);
         favoriteButton.setTextColor(Color.RED);
         cheapButton.setTextColor(Color.RED);
@@ -129,7 +125,8 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
     }
-    private void setFavoriteButton(){
+
+    private void setFavoriteButton() {
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.WHITE);
         cheapButton.setTextColor(Color.RED);
@@ -137,7 +134,8 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
     }
-    private void setCheapButton(){
+
+    private void setCheapButton() {
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.RED);
         cheapButton.setTextColor(Color.WHITE);
@@ -145,6 +143,7 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
     }
+
     public void setItemsList() {
 
         Call<List<FuelStations>> call = ApiClient
@@ -170,7 +169,8 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
-    public void setFavoritedItemList(){
+
+    public void setFavoritedItemList() {
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
@@ -203,7 +203,7 @@ public class FuelStationFragment extends Fragment {
 
     }
 
-    public void setNearbyStationsItemList(){
+    public void setNearbyStationsItemList() {
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
@@ -232,9 +232,24 @@ public class FuelStationFragment extends Fragment {
 
     public void getLastLocation() {
 
+        Task<Location> locationTask = null;
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
-        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity)getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                } else {
+                    ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                }
+            }
+            Toast.makeText(getContext(), "You need to give the app access to use this feature", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+
+            locationTask = fusedLocationProviderClient.getLastLocation();
+        }
 
 
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -286,7 +301,7 @@ public class FuelStationFragment extends Fragment {
         }
     }
 
-    /*public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
@@ -301,7 +316,7 @@ public class FuelStationFragment extends Fragment {
                 }
             }
         }
-    }*/
+    }
 
     //Rounds the double to specific decimals
     public static double round(double value, int places) {
