@@ -24,6 +24,7 @@ import com.Fuel.fuelservice.preference.UserPrefs;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,6 +49,7 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 setNearbyButton();
                 setItemsList();
             }
@@ -55,6 +57,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 setFavoriteButton();
                 setFavoritedItemList();
             }
@@ -62,8 +65,9 @@ public class FuelStationFragment extends Fragment {
         cheapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 setCheapButton();
-                setItemsList();
+                setCheapestStationsItemList();
             }
         });
 
@@ -135,8 +139,6 @@ public class FuelStationFragment extends Fragment {
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
 
-        Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
-
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
@@ -189,6 +191,52 @@ public class FuelStationFragment extends Fragment {
             @Override
             public void onFailure(Call<List<FuelStations>> call, Throwable t) {
 
+            }
+        });
+    }
+    public void setCheapestStationsItemList(){
+        Call<List<FuelStations>> call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .getCheapestStations();
+        call.enqueue(new Callback<List<FuelStations>>() {
+            @Override
+            public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
+                if (response.isSuccessful()) {
+                    fuelStations = (ArrayList<FuelStations>) response.body();
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
+                    adapter.setFuelStations(fuelStations);
+                    System.out.println(fuelStations.size());
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void updatePrices(){
+
+
+        Call<ResponseBody>call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .getPriceChange();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println("price method ran successfully");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("price failure");
             }
         });
     }
