@@ -1,6 +1,6 @@
 package com.Fuel.fuelservice.Objects;
 
-public class FuelStations {
+public class FuelStations  {
 
     private Long id;
     private String name;

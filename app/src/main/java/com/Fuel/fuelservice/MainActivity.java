@@ -2,6 +2,8 @@ package com.Fuel.fuelservice;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -97,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        System.out.println("1111111111111111111111111");
+
 
         updateOnStartUp();
 
@@ -127,8 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.nav_home:
-                userPositionFinder = new UserPositionFinder(this);
-                userPositionFinder.getLastLocation();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new FuelStationFragment()).commit();
                 break;

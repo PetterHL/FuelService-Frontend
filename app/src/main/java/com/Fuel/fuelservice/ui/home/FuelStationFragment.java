@@ -2,6 +2,8 @@ package com.Fuel.fuelservice.ui.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -36,10 +38,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.SphericalUtil;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,10 +58,13 @@ public class FuelStationFragment extends Fragment {
     private RecyclerView itemRecyclerView;
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
+    private float menuSelect = 1;
+
     UserPositionFinder userPositionFinder;
     private LatLng stationPosition;
 
     LatLng userPosistion = null;
+    Context context;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     int LOCATION_REQUEST_CODE = 10001;
@@ -70,9 +79,16 @@ public class FuelStationFragment extends Fragment {
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
 
+        System.out.println("6966969696966969699696969");
+        System.out.println(getActivity());
+
+        context = getContext();
+
+
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 1;
                 setNearbyButton();
                 setItemsList();
             }
@@ -80,6 +96,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 2;
                 setFavoriteButton();
                 setFavoritedItemList();
             }
@@ -87,6 +104,7 @@ public class FuelStationFragment extends Fragment {
         cheapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 3;
                 setCheapButton();
                 setItemsList();
             }
@@ -168,9 +186,7 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
                 } else {
                     Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
                     fuelStations.clear();
@@ -216,9 +232,7 @@ public class FuelStationFragment extends Fragment {
 
     public void getLastLocation() {
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        System.out.println("FIrts");
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
         @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
 
@@ -229,6 +243,9 @@ public class FuelStationFragment extends Fragment {
                 if (location != null) {
                     userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
                     updateDistances(userPosistion);
+                    if (menuSelect == 1) {
+                        fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
+                    }
                     adapter.setFuelStations(fuelStations);
                 } else  {
                     adapter.setFuelStations(fuelStations);
@@ -249,6 +266,7 @@ public class FuelStationFragment extends Fragment {
         userPositionFinder = new UserPositionFinder(getActivity());
 
         for(FuelStations fuelStations: fuelStations) {
+
             //Splits the coordinateString to an array
             String [] value = fuelStations.getCoordinates().split(",");
 
@@ -265,7 +283,6 @@ public class FuelStationFragment extends Fragment {
             distance = round(distance, 2);
 
             fuelStations.setUserDistance(distance);
-            System.out.println(fuelStations.getUserDistance());
         }
     }
 
