@@ -47,7 +47,7 @@ public class ApiClient {
         return SINGLETON;
     }
 
-    // Connects to the FantApi.
+    // Connects to the FuelStationApi.
     public FuelStaionApi getApi() {
         return retrofit.create(FuelStaionApi.class);
     }
