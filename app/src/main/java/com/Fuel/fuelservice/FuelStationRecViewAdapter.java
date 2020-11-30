@@ -56,7 +56,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         holder.StationTitle.setText(fuelStations.get(position).getName());
         holder.PetrolPrice.setText(fuelStations.get(position).petrolToString());
         holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
-        holder.Nearby.setText("" + fuelStations.get(position).getUserDistance());
+        holder.Nearby.setText("" + fuelStations.get(position).getUserDistance() + "km");
 
         System.out.println(fuelStations.get(position).getUserDistance());
 
