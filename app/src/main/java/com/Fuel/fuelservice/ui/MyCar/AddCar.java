@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -16,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.Fuel.fuelservice.Api.ApiClient;
+import com.Fuel.fuelservice.ui.MyCar.MyCars;
+import com.Fuel.fuelservice.CarRecViewAdapter;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
@@ -53,6 +56,8 @@ public class AddCar extends BottomSheetDialogFragment {
     static RadioButton petrol_radio, diesel_radio;
     static RadioGroup radioGroup;
 
+    boolean petrol;
+
     private User user = new User();
 
     @Nullable
@@ -66,7 +71,7 @@ public class AddCar extends BottomSheetDialogFragment {
         field_fuelUsage = view.findViewById(R.id.Field_fuelUsage);
 
 
-
+        radioGroup = view.findViewById(R.id.radioGroup);
         petrol_radio = view.findViewById(R.id.Petrol_radio);
         diesel_radio = view.findViewById(R.id.Diesel_radio);
 
@@ -93,12 +98,7 @@ public class AddCar extends BottomSheetDialogFragment {
                 String model = field_model.getText().toString();
                 String fuelUsage = field_fuelUsage.getText().toString();
 
-                boolean petrol = true;
 
-                System.out.println(fuelUsage);
-
-
-                double fuelUsage_double = setDouble(fuelUsage);
 
                 if (RegNumber.isEmpty()) {
                     regnumber_field.setError("Please enter a registration number");
@@ -119,18 +119,26 @@ public class AddCar extends BottomSheetDialogFragment {
                 }
 
                 if (fuelUsage.isEmpty()) {
-                    field_model.setError("Please enter the fuel consumption");
-                    field_model.requestFocus();
+                    field_fuelUsage.setError("Please enter the fuel consumption");
+                    field_fuelUsage.requestFocus();
                     return;
-                } else if (fuelUsage_double < 0) {
-                    field_model.setError("Fuel consumption can not be a negative number");
-                    field_model.requestFocus();
                 }
 
                 if(petrol_radio.isChecked()) {
-                    petrol = true;
+                    boolean petrol = true;
                 } else if(diesel_radio.isChecked()) {
-                    petrol = false;
+                    boolean petrol = false;
+                } else {
+                    petrol_radio.setError("Please choose fueltype");
+                    petrol_radio.requestFocus();
+                    return;
+                }
+
+                double fuelUsage_double = setDouble(fuelUsage);
+
+                if (fuelUsage_double < 0) {
+                    field_fuelUsage.setError("Fuel consumption can not be a negative number");
+                    field_fuelUsage.requestFocus();
                 }
 
                 addCar(RegNumber, manufacturer, model, petrol, fuelUsage_double);
@@ -198,6 +206,8 @@ public class AddCar extends BottomSheetDialogFragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    dismiss();
+                    Toast.makeText(getActivity(), "Car added!", Toast.LENGTH_LONG).show();
                 }
             }
 
