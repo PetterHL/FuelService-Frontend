@@ -87,18 +87,18 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Fragment newFragment = new FuelStationFragment();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
 
                     try {
-                        //System.out.println(response.body().string());
                         userPrefs.setToken(response.body().string());
                         getActivity().recreate();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-
                     Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_LONG).show();
+                    System.out.println("22222222222222222222222222");
+                    System.out.println(getActivity());
                     fragmentTransaction.replace(R.id.fragment_contatiner, newFragment).commit();
 
 

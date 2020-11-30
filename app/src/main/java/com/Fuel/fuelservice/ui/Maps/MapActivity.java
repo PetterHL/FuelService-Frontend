@@ -1,7 +1,9 @@
 package com.Fuel.fuelservice.ui.Maps;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +62,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         LatLng Maker = null;
 
+
+
         //Goes though all the different fuelstations
         for(FuelStations fuelStations : fuelStations) {
 
@@ -73,6 +78,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Maker = new LatLng(coordNorth, coordWest);
             googleMap.addMarker(new MarkerOptions().position(Maker).title(fuelStations.getName()));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(Maker));
+
+
+            double distance;
+
+            distance = SphericalUtil.computeDistanceBetween(Maker, Maker);
+            Toast.makeText(this, distance/1000 + "km", Toast.LENGTH_SHORT).show();
+
+
         }
 
         //If the Maker is initialized by the for loop

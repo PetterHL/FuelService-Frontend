@@ -1,7 +1,14 @@
 package com.Fuel.fuelservice;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,17 +16,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.Fuel.fuelservice.Api.ApiClient;
 import com.Fuel.fuelservice.ui.Maps.MapActivity;
+import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
 import com.Fuel.fuelservice.ui.MyCar.MyCars;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 
 import com.Fuel.fuelservice.preference.UserPrefs;
 import com.Fuel.fuelservice.ui.createUser.RegisterFragment;
 import com.Fuel.fuelservice.ui.login.LoginFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -45,7 +60,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+    UserPositionFinder userPositionFinder;
+
+    private static final String TAG = "MainActivity";
+    int LOCATION_REQUEST_CODE = 10001;
+
     GoogleMap map;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            askLocationPermission();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navMenu = navigationView.getMenu();
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        System.out.println("1111111111111111111111111");
+
 
         updateOnStartUp();
 
@@ -152,4 +188,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navMenu.findItem(R.id.nav_logOut).setVisible(true);
         }
     }
-}
+
+    private void askLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Log.d(TAG, "askLocationPermission: you should show an alert dialog...");
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            }
+        }
+    }
+    }

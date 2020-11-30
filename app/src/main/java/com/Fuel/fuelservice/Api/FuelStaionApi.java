@@ -46,7 +46,8 @@ public interface FuelStaionApi {
                                      @Field("RegNumber") String RegNumber,
                                      @Field("manufacturer") String manufacturer,
                                      @Field("model") String model,
-                                     @Field("petrol") boolean petrol);
+                                     @Field("petrol") boolean petrol,
+                                     @Field("fuelUsage") double fuelUsage);
 
     @GET("CheckNorway")
     public Call<ResponseBody> getCar(@Query("RegistrationNumber") String RegistrationNumber,

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.fragment.BottomSheetFragment;
 import com.bumptech.glide.Glide;
+import com.google.maps.android.SphericalUtil;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,9 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         holder.StationTitle.setText(fuelStations.get(position).getName());
         holder.PetrolPrice.setText(fuelStations.get(position).petrolToString());
         holder.DieselPrice.setText(fuelStations.get(position).dieselToString());
+        holder.Nearby.setText("" + fuelStations.get(position).getUserDistance() + "km");
 
+        System.out.println(fuelStations.get(position).getUserDistance());
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -70,6 +73,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
                 String fuelStationName = fuelStation.getName();
                 String petrolString = String.valueOf(fuelStation.getPetrolPrice());
                 String dieselString = String.valueOf(fuelStation.getDieselPrice());
+                String userDistance = String.valueOf(fuelStation.getUserDistance());
 
 
                 Intent intent = new Intent(context, BottomSheetFragment.class);
@@ -78,6 +82,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
                 bundle.putString("FuelStation", fuelStationName);
                 bundle.putString("DieselPrice", petrolString);
                 bundle.putString("PetrolPrice", dieselString);
+                bundle.putString("userDistance", userDistance);
                 intent.putExtra("myPackage", bundle);
 
                 bottomSheetFragment.setArguments(bundle);
@@ -105,6 +110,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         private TextView DieselPrice;
         private TextView TvStationView;
         private ImageView imageView;
+        private TextView Nearby;
         private CardView parent;
 
         public ViewHolder(@NonNull View StationView) {
@@ -113,6 +119,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
             StationTitle = StationView.findViewById(R.id.headerText);
             PetrolPrice = StationView.findViewById(R.id.petrolPrice);
             DieselPrice = StationView.findViewById(R.id.dieselPrice);
+            Nearby = StationView.findViewById(R.id.nearby);
             imageView = itemView.findViewById(R.id.icon);
         }
     }

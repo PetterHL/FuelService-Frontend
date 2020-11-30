@@ -1,6 +1,12 @@
 package com.Fuel.fuelservice.ui.home;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +29,23 @@ import com.Fuel.fuelservice.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
+import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.maps.android.SphericalUtil;
 
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +58,17 @@ public class FuelStationFragment extends Fragment {
     private RecyclerView itemRecyclerView;
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
+    private float menuSelect = 1;
+
+    UserPositionFinder userPositionFinder;
+    private LatLng stationPosition;
+
+    LatLng userPosistion = null;
+    Context context;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    int LOCATION_REQUEST_CODE = 10001;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,9 +79,16 @@ public class FuelStationFragment extends Fragment {
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
 
+        System.out.println("6966969696966969699696969");
+        System.out.println(getActivity());
+
+        context = getContext();
+
+
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 1;
                 setNearbyButton();
                 setItemsList();
             }
@@ -55,6 +96,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 2;
                 setFavoriteButton();
                 setFavoritedItemList();
             }
@@ -62,6 +104,7 @@ public class FuelStationFragment extends Fragment {
         cheapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                menuSelect = 3;
                 setCheapButton();
                 setItemsList();
             }
@@ -75,7 +118,6 @@ public class FuelStationFragment extends Fragment {
 
 
         return view;
-
     }
 
 
@@ -116,10 +158,7 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
-                    adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
-
+                    getLastLocation();
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
                 }
@@ -147,9 +186,7 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
                     adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
                 } else {
                     Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
                     fuelStations.clear();
@@ -192,5 +229,88 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
+
+    public void getLastLocation() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+
+        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+
+
+        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
+                    updateDistances(userPosistion);
+                    if (menuSelect == 1) {
+                        fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
+                    }
+                    adapter.setFuelStations(fuelStations);
+                } else  {
+                    adapter.setFuelStations(fuelStations);
+                }
+            }
+        });
+        locationTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "You need to give the app access to use this feature", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void updateDistances(LatLng userPosition) {
+        userPositionFinder = new UserPositionFinder(getActivity());
+
+        for(FuelStations fuelStations: fuelStations) {
+
+            //Splits the coordinateString to an array
+            String [] value = fuelStations.getCoordinates().split(",");
+
+            //Changes the values from String to double
+            double coordNorth = Double.valueOf(value[0]);
+            double coordWest = Double.valueOf(value[1]);
+
+            stationPosition = new LatLng(coordNorth, coordWest);
+
+            double distance;
+
+            distance = SphericalUtil.computeDistanceBetween(userPosition, stationPosition);
+            distance = distance/1000;
+            distance = round(distance, 2);
+
+            fuelStations.setUserDistance(distance);
+        }
+    }
+
+    /*public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                getLastLocation();
+            } else {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity)getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                    } else {
+                        ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                    }
+                }
+            }
+        }
+    }*/
+
+    //Rounds the double to specific decimals
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
 
 }
