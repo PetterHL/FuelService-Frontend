@@ -51,7 +51,9 @@ public class RegisterFragment extends Fragment {
                         break;
                 }
             }
+
         });
+
         return view;
     }
 

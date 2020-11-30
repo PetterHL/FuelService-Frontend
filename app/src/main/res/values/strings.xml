@@ -27,4 +27,7 @@
     <string name="login_header">Logg inn</string>
     <string name="icon">img placeholder</string>
     <string name="nearby">0.05km</string>
+    <string name="nearby2">Nearby</string>
+    <string name="cheapest">Cheapest</string>
+    <string name="favorites">Favorites</string>
 </resources>

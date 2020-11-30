@@ -6,7 +6,7 @@
     tools:context=".ui.Maps.MapActivity"
     android:layout_gravity="bottom"
     android:background="@android:color/transparent"
-    android:id="@+id/heiheihei">
+    android:id="@+id/map_details">
 
 
     <TextView

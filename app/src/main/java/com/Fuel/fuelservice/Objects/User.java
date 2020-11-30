@@ -1,17 +1,31 @@
 package com.Fuel.fuelservice.Objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private String username;
     private String password;
     private String email;
+    ArrayList<String> favoriteStations = new ArrayList<>();
+
     private String token;
 
-    public User(String username, String password, String email, String token) {
+    public User(String username, String password, String email, ArrayList<String> favoriteStations, String token) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.favoriteStations = favoriteStations;
         this.token = token;
+    }
+
+    public ArrayList<String> getFavoriteStations() {
+        return favoriteStations;
+    }
+
+    public void addFavoriteStation(String name) {
+        favoriteStations.add(name);
     }
 
     public User() {
@@ -44,6 +58,7 @@ public class User {
     public String getToken() {
         return token;
     }
+
 
     public void setToken(String token) {
         this.token = token;
