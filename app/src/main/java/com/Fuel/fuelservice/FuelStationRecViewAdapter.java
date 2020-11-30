@@ -84,6 +84,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
 
             }
     });
+        //Set the right picture corresponding to the stations name.
         FuelStations fuelStation = fuelStations.get(position);
 
         if (fuelStation.getName().equals("Circle k")) {

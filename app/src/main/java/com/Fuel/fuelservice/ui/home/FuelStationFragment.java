@@ -83,6 +83,9 @@ public class FuelStationFragment extends Fragment {
     }
 
 
+    /**
+     * Changes colours on radio buttons when nearby button is selected.
+     */
     private void setNearbyButton(){
         nearbyButton.setTextColor(Color.WHITE);
         favoriteButton.setTextColor(Color.RED);
@@ -91,6 +94,9 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
     }
+    /**
+     * Changes colours on radio buttons when favorite button is selected.
+     */
     private void setFavoriteButton(){
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.WHITE);
@@ -99,6 +105,9 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
     }
+    /**
+     * Changes colours on radio buttons when cheapest button is selected.
+     */
     private void setCheapButton(){
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.RED);
@@ -107,6 +116,7 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
     }
+
     public void setItemsList() {
 
         Call<List<FuelStations>> call = ApiClient
@@ -135,6 +145,10 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * Makes a call to the backend to list out favorite stations.
+     */
     public void setFavoritedItemList(){
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
@@ -167,7 +181,9 @@ public class FuelStationFragment extends Fragment {
         });
 
     }
-
+    /**
+     * Makes a call to the backend to list out stations ordered by which one is closest to current location.
+     */
     public void setNearbyStationsItemList(){
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
@@ -194,6 +210,9 @@ public class FuelStationFragment extends Fragment {
             }
         });
     }
+    /**
+     * Makes a call to the backend to list out stations ordered by which one is cheapest.
+     */
     public void setCheapestStationsItemList(){
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
@@ -221,6 +240,9 @@ public class FuelStationFragment extends Fragment {
         });
     }
 
+    /**
+     * Makes a call to the backend to update the fuel prices
+     */
     public void updatePrices(){
 
 
