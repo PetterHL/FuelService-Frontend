@@ -1,6 +1,10 @@
 package com.Fuel.fuelservice.ui.home;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +28,16 @@ import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
 import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.maps.android.SphericalUtil;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +53,12 @@ public class FuelStationFragment extends Fragment {
     AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
 
     UserPositionFinder userPositionFinder;
-    private LatLng userPosition;
     private LatLng stationPosition;
+
+    LatLng userPosistion = null;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    int LOCATION_REQUEST_CODE = 10001;
 
     @Nullable
     @Override
@@ -122,8 +140,7 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    updateDistances();
-                    adapter.setFuelStations(fuelStations);
+                    getLastLocation();
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
                 }
@@ -197,9 +214,39 @@ public class FuelStationFragment extends Fragment {
         });
     }
 
-    public void updateDistances() {
+    public void getLastLocation() {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        System.out.println("FIrts");
+
+        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+
+
+        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
+                    updateDistances(userPosistion);
+                    adapter.setFuelStations(fuelStations);
+                } else  {
+                    adapter.setFuelStations(fuelStations);
+                }
+            }
+        });
+        locationTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "You need to give the app access to use this feature", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void updateDistances(LatLng userPosition) {
         userPositionFinder = new UserPositionFinder(getActivity());
-        userPosition = userPositionFinder.getLastLocation();
 
         for(FuelStations fuelStations: fuelStations) {
             //Splits the coordinateString to an array
@@ -213,20 +260,40 @@ public class FuelStationFragment extends Fragment {
 
             double distance;
 
-            System.out.println(stationPosition);
-            System.out.println(userPosition);
-
-            System.out.println("##################");
-
             distance = SphericalUtil.computeDistanceBetween(userPosition, stationPosition);
+            distance = distance/1000;
+            distance = round(distance, 2);
 
-            fuelStations.setUserDistance(distance/1000);
-
+            fuelStations.setUserDistance(distance);
             System.out.println(fuelStations.getUserDistance());
-
         }
     }
 
+    /*public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                getLastLocation();
+            } else {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity)getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                    } else {
+                        ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                    }
+                }
+            }
+        }
+    }*/
+
+    //Rounds the double to specific decimals
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
 
 }
