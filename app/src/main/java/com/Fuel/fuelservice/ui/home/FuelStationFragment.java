@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Fuel.fuelservice.Api.ApiClient;
+import com.Fuel.fuelservice.DistanceSorter;
 import com.Fuel.fuelservice.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
@@ -215,6 +217,7 @@ public class FuelStationFragment extends Fragment {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
                     System.out.println(response.body().toString());
+                    fuelStations.sort(new DistanceSorter());
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
                 } else {
@@ -257,6 +260,7 @@ public class FuelStationFragment extends Fragment {
             public void onSuccess(Location location) {
                 if (location != null) {
                     userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
+                    System.out.println("My position " + userPosistion);
                     updateDistances(userPosistion);
                     if (menuSelect == 1) {
                         fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
@@ -286,8 +290,8 @@ public class FuelStationFragment extends Fragment {
             String [] value = fuelStations.getCoordinates().split(",");
 
             //Changes the values from String to double
-            double coordNorth = Double.valueOf(value[0]);
-            double coordWest = Double.valueOf(value[1]);
+            double coordNorth = Double.parseDouble(value[0]);
+            double coordWest = Double.parseDouble(value[0]);
 
             stationPosition = new LatLng(coordNorth, coordWest);
 

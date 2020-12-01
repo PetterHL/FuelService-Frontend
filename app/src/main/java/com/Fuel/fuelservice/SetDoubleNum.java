@@ -2,12 +2,12 @@ package com.Fuel.fuelservice;
 
 import java.text.DecimalFormat;
 
-public class SetDouble {
+public class SetDoubleNum {
     /**
      * @param doubleValue
      * @return a double with 2 decimals
      */
-    public static double setDouble(String doubleValue) {
+    public static double setDoubleNum(String doubleValue) {
 
         double doubleValue_double = Double.parseDouble(doubleValue);
 

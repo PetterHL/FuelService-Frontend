@@ -1,7 +1,5 @@
 package com.Fuel.fuelservice.ui;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,20 +22,15 @@ import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.Api.ApiClient;
 
 import com.Fuel.fuelservice.Objects.User;
-import com.Fuel.fuelservice.SetDouble;
+import com.Fuel.fuelservice.SetDoubleNum;
 import com.Fuel.fuelservice.preference.UserPrefs;
-import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.Fuel.fuelservice.SetDouble.setDouble;
+import static com.Fuel.fuelservice.SetDoubleNum.setDoubleNum;
 
 public class TripCalculator extends Fragment {
 
@@ -129,7 +119,8 @@ public class TripCalculator extends Fragment {
         System.out.println(car.getFuelUsage());
         System.out.println("1111111");
 
-        double fuel = findFuelUsage(car.getFuelUsage(), )
+        calculateFuelUsage(car.getFuelUsage(),12.34);
+        //double fuel = findFuelUsage(car.getFuelUsage(), 1.34565);
 
 
     }
@@ -138,13 +129,11 @@ public class TripCalculator extends Fragment {
         System.out.println(car.getManufacturer());
     }
 
-    public double findFuelUsage(double fuelUsage, double distance) {
+    public double calculateFuelUsage(double fuelUsage, double distance) {
 
-
-
-        SetDouble setDouble = new SetDouble();
-        double fuelUsage_double = setDouble("0.25");
-        return fuelUsage_double;
+        double fuelUse = (distance/10) * fuelUsage;
+        double fuelUsage_double = Double.parseDouble("0.25");
+        return fuelUse;
     }
 
 
