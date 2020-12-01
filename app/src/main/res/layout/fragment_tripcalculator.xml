@@ -22,16 +22,23 @@
             android:id="@+id/TripTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TripCalculator"
+            android:text="Trip Calculator"
             android:textColor="#000"
             android:layout_marginTop="40dp"
-            android:textSize="30sp"
+            android:textSize="40sp"
              />
+        <View
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/darker_gray" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="210sp"
+            android:layout_marginTop="40dp"
+            android:layout_height="50sp" />
 
         <EditText
             android:id="@+id/editTextDistance"
@@ -51,7 +58,12 @@
             android:layout_marginTop="40dp"
             android:inputType="textEmailAddress"
             />
-
+        <View
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/darker_gray" />
         <Button
             android:id="@+id/button"
             android:layout_height="wrap_content"
