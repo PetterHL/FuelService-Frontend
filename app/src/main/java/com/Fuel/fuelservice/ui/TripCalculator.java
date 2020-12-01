@@ -41,6 +41,7 @@ public class TripCalculator extends Fragment {
     private User user = new User();
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     public ArrayList<Car> cars = new ArrayList<>();
+    private Car car;
     Spinner spinner;
 
     boolean fueltype;
@@ -63,11 +64,19 @@ public class TripCalculator extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Car car = (Car) parent.getSelectedItem();
+                car = (Car) parent.getSelectedItem();
                 displayUserData(car);
-                String test = "" + fuelStations.get(0).getPetrolPrice();
-                editTextFuelPrice.setText(test);
-                fueltype = car.isPetrol();
+                
+                if(car != null && (!fuelStations.isEmpty())) {
+                    if (car.isPetrol()) {
+                        String test = "" + fuelStations.get(0).getPetrolPrice();
+                        editTextFuelPrice.setText(test);
+                    }
+                    if (!car.isPetrol()) {
+                        String test = "" + fuelStations.get(0).getDieselPrice();
+                        editTextFuelPrice.setText(test);
+                    }
+                }
             }
 
             @Override
@@ -98,6 +107,17 @@ public class TripCalculator extends Fragment {
             public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
+
+                    if(car != null) {
+                        if (car.isPetrol()) {
+                            String test = "" + fuelStations.get(0).getPetrolPrice();
+                            editTextFuelPrice.setText(test);
+                        }
+                        if (!car.isPetrol()) {
+                            String test = "" + fuelStations.get(0).getDieselPrice();
+                            editTextFuelPrice.setText(test);
+                        }
+                    }
 
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
