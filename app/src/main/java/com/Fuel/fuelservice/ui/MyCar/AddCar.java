@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.Fuel.fuelservice.Api.ApiClient;
+import com.Fuel.fuelservice.SetDouble;
 import com.Fuel.fuelservice.ui.MyCar.MyCars;
 import com.Fuel.fuelservice.CarRecViewAdapter;
 import com.Fuel.fuelservice.Objects.User;
@@ -46,6 +47,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.Fuel.fuelservice.SetDouble.setDouble;
 
 public class AddCar extends BottomSheetDialogFragment {
 
@@ -134,6 +137,8 @@ public class AddCar extends BottomSheetDialogFragment {
                     return;
                 }
 
+                SetDouble setDouble = new SetDouble();
+
                 double fuelUsage_double = setDouble(fuelUsage);
 
                 if (fuelUsage_double < 0) {
@@ -200,7 +205,7 @@ public class AddCar extends BottomSheetDialogFragment {
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
-                .addCar(token, RegNumber, manufacturer, model, petrol, fuelUsage);
+                .addCar(token, RegNumber.toUpperCase(), manufacturer.toUpperCase(), model.toUpperCase(), petrol, fuelUsage);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -282,23 +287,6 @@ public class AddCar extends BottomSheetDialogFragment {
             diesel_radio.setChecked(true);
         }
 
-    }
-
-
-    /**
-     * @param fuelUsage
-     * @return a double with 2 decimals
-     */
-    private static double setDouble(String fuelUsage) {
-
-        double fuelUsage_double = Double.parseDouble(fuelUsage);
-
-        DecimalFormat df = new DecimalFormat("#.00");
-        String fuelUsage_String = df.format(fuelUsage_double);
-
-        double fuelUsage_decimal = Double.parseDouble(fuelUsage_String);
-
-        return fuelUsage_decimal;
     }
 
 }

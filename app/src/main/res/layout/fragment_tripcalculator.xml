@@ -31,28 +31,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/prompt_username"
+            android:hint="Distance"
             android:inputType="textEmailAddress"
             />
-
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-             />
-
-
-        <fragment
-            android:id="@+id/nav_map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="212dp"
-            android:layout_gravity="bottom"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
     </LinearLayout>
 
 
