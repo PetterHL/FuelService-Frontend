@@ -49,6 +49,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,6 +87,7 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 menuSelect = 1;
                 setNearbyButton();
                 setItemsList();
@@ -94,6 +96,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 menuSelect = 2;
                 setFavoriteButton();
                 setFavoritedItemList();
@@ -102,9 +105,10 @@ public class FuelStationFragment extends Fragment {
         cheapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updatePrices();
                 menuSelect = 3;
                 setCheapButton();
-                setItemsList();
+                setCheapestStationsItemList();
             }
         });
 
@@ -119,7 +123,10 @@ public class FuelStationFragment extends Fragment {
     }
 
 
-    private void setNearbyButton() {
+    /**
+     * Changes colours on radio buttons when nearby button is selected.
+     */
+    private void setNearbyButton(){
         nearbyButton.setTextColor(Color.WHITE);
         favoriteButton.setTextColor(Color.RED);
         cheapButton.setTextColor(Color.RED);
@@ -127,8 +134,10 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_checked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_unchecked);
     }
-
-    private void setFavoriteButton() {
+    /**
+     * Changes colours on radio buttons when favorite button is selected.
+     */
+    private void setFavoriteButton(){
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.WHITE);
         cheapButton.setTextColor(Color.RED);
@@ -136,8 +145,10 @@ public class FuelStationFragment extends Fragment {
         nearbyButton.setBackgroundResource(R.drawable.radio_button_nearby_unchecked);
         favoriteButton.setBackgroundResource(R.drawable.radio_button_favorite_checked);
     }
-
-    private void setCheapButton() {
+    /**
+     * Changes colours on radio buttons when cheapest button is selected.
+     */
+    private void setCheapButton(){
         nearbyButton.setTextColor(Color.RED);
         favoriteButton.setTextColor(Color.RED);
         cheapButton.setTextColor(Color.WHITE);
@@ -172,11 +183,12 @@ public class FuelStationFragment extends Fragment {
         });
     }
 
-    public void setFavoritedItemList() {
+    /**
+     * Makes a call to the backend to list out favorite stations.
+     */
+    public void setFavoritedItemList(){
         UserPrefs userPrefs = new UserPrefs(requireContext());
         String token = "Bearer " + userPrefs.getToken();
-
-        Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
 
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
@@ -204,8 +216,10 @@ public class FuelStationFragment extends Fragment {
         });
 
     }
-
-    public void setNearbyStationsItemList() {
+    /**
+     * Makes a call to the backend to list out stations ordered by which one is closest to current location.
+     */
+    public void setNearbyStationsItemList(){
         Call<List<FuelStations>> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
@@ -229,6 +243,58 @@ public class FuelStationFragment extends Fragment {
             @Override
             public void onFailure(Call<List<FuelStations>> call, Throwable t) {
 
+            }
+        });
+    }
+    /**
+     * Makes a call to the backend to list out stations ordered by which one is cheapest.
+     */
+    public void setCheapestStationsItemList(){
+        Call<List<FuelStations>> call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .getCheapestStations();
+        call.enqueue(new Callback<List<FuelStations>>() {
+            @Override
+            public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
+                if (response.isSuccessful()) {
+                    fuelStations = (ArrayList<FuelStations>) response.body();
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
+                    adapter.setFuelStations(fuelStations);
+                    System.out.println(fuelStations.size());
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /**
+     * Makes a call to the backend to update the fuel prices
+     */
+    public void updatePrices(){
+
+
+        Call<ResponseBody>call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .getPriceChange();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println("price method ran successfully");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("price failure");
             }
         });
     }
