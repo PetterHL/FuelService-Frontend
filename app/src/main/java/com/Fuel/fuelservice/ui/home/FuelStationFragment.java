@@ -239,6 +239,8 @@ public class FuelStationFragment extends Fragment {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
+
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity)getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -250,7 +252,6 @@ public class FuelStationFragment extends Fragment {
             Toast.makeText(getContext(), "You need to give the app access to use this feature", Toast.LENGTH_SHORT).show();
             return;
         } else {
-
             locationTask = fusedLocationProviderClient.getLastLocation();
         }
 
@@ -262,6 +263,7 @@ public class FuelStationFragment extends Fragment {
                     userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
                     System.out.println("My position " + userPosistion);
                     updateDistances(userPosistion);
+                    System.out.println(fuelStations.get(0).getCoordinates());
                     if (menuSelect == 1) {
                         fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
                     }
@@ -291,7 +293,7 @@ public class FuelStationFragment extends Fragment {
 
             //Changes the values from String to double
             double coordNorth = Double.parseDouble(value[0]);
-            double coordWest = Double.parseDouble(value[0]);
+            double coordWest = Double.parseDouble(value[1]);
 
             stationPosition = new LatLng(coordNorth, coordWest);
 

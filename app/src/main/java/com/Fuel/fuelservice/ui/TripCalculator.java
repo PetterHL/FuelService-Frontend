@@ -108,6 +108,7 @@ public class TripCalculator extends Fragment {
         });
     }
 
+
     public void setSpinnerAdapter() {
         ArrayAdapter<Car> myAdapter =
                 new ArrayAdapter<Car>(getContext(),android.R.layout.simple_spinner_item,cars);
