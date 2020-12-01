@@ -150,14 +150,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 startActivity(getIntent());
                 break;
-            case R.id.nav_stats:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
-                        new TripCalculator()).commit();
-                break;
+
             case R.id.nav_MyCar:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new MyCars()).commit();
                 break;
+
+            case R.id.nav_TripCalculator:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new TripCalculator()).commit();
+
         }
         drawerLayout.closeDrawer((GravityCompat.START));
 
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navMenu.findItem(R.id.nav_map).setVisible(true);
             navMenu.findItem(R.id.nav_stats).setVisible(false);
             navMenu.findItem(R.id.nav_MyCar).setVisible(false);
-            navMenu.findItem(R.id.nav_fuelCalculator).setVisible(false);
+            navMenu.findItem(R.id.nav_TripCalculator).setVisible(false);
             navMenu.findItem(R.id.nav_login).setVisible(true);
             navMenu.findItem(R.id.nav_register).setVisible(true);
             navMenu.findItem(R.id.nav_settings).setVisible(true);
@@ -183,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navMenu.findItem(R.id.nav_map).setVisible(true);
             navMenu.findItem(R.id.nav_stats).setVisible(true);
             navMenu.findItem(R.id.nav_MyCar).setVisible(true);
-            navMenu.findItem(R.id.nav_fuelCalculator).setVisible(true);
+            navMenu.findItem(R.id.nav_TripCalculator).setVisible(true);
             navMenu.findItem(R.id.nav_login).setVisible(false);
             navMenu.findItem(R.id.nav_register).setVisible(false);
             navMenu.findItem(R.id.nav_settings).setVisible(true);

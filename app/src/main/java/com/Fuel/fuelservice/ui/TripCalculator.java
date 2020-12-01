@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.Fuel.fuelservice.Objects.Car;
+import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.Api.ApiClient;
 
@@ -34,7 +35,7 @@ import static com.Fuel.fuelservice.SetDoubleNum.setDoubleNum;
 
 public class TripCalculator extends Fragment {
 
-    EditText editTextUsername, editTextPwd;
+    EditText editTextDistance, editTextFuelPrice;
     Button addTrip;
     private User user = new User();
     public ArrayList<Car> cars = new ArrayList<>();
@@ -48,8 +49,8 @@ public class TripCalculator extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tripcalculator, container, false);
 
-        editTextUsername = view.findViewById(R.id.editTextUsernameOnLogin);
-        editTextPwd = view.findViewById(R.id.editTextTextPassword);
+        editTextDistance = view.findViewById(R.id.editTextDistance);
+        editTextFuelPrice = view.findViewById(R.id.editTextFuelPrice);
         spinner = view.findViewById(R.id.spinner);
         addTrip = view.findViewById(R.id.button);
 
@@ -115,12 +116,18 @@ public class TripCalculator extends Fragment {
     }
 
     public void addTrip() {
-        Car car = (Car) spinner.getSelectedItem();
-        System.out.println(car.getFuelUsage());
-        System.out.println("1111111");
+        //Car car = (Car) spinner.getSelectedItem();
+        //if (car.getFuelUsage() != 0) {
+      //      editTextFuelPrice.setText(String.valueOf(car.getFuelUsage()));
+        //}
+        String distanceText = editTextDistance.getText().toString();
+        double distanceDouble = Double.parseDouble(distanceText);
 
-        calculateFuelUsage(car.getFuelUsage(),12.34);
-        //double fuel = findFuelUsage(car.getFuelUsage(), 1.34565);
+        String fuelText = editTextFuelPrice.getText().toString();
+        double fuelDouble = Double.parseDouble(fuelText);
+
+        System.out.println(calculateFuelUsage(fuelDouble,distanceDouble));
+
 
 
     }
@@ -131,9 +138,7 @@ public class TripCalculator extends Fragment {
 
     public double calculateFuelUsage(double fuelUsage, double distance) {
 
-        double fuelUse = (distance/10) * fuelUsage;
-        double fuelUsage_double = Double.parseDouble("0.25");
-        return fuelUse;
+        return (distance/10) * fuelUsage;
     }
 
 

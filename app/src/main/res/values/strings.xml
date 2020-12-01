@@ -11,7 +11,7 @@
     <string name="menu_map">Map</string>
     <string name="menu_stats">Statistics</string>
     <string name="menu_MyCar">My Car</string>
-    <string name="menu_fuelCalculator">Fuel Calculator</string>
+    <string name="menu_tripCalculator">Trip Calculator</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
     <string name="menu_register">Register</string>
