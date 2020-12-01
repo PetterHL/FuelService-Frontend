@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,8 +39,11 @@ public class TripCalculator extends Fragment {
     EditText editTextDistance, editTextFuelPrice;
     Button addTrip;
     private User user = new User();
+    public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     public ArrayList<Car> cars = new ArrayList<>();
     Spinner spinner;
+
+    boolean fueltype;
 
     GoogleMap map;
 
@@ -61,6 +65,9 @@ public class TripCalculator extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Car car = (Car) parent.getSelectedItem();
                 displayUserData(car);
+                String test = "" + fuelStations.get(0).getPetrolPrice();
+                editTextFuelPrice.setText(test);
+                fueltype = car.isPetrol();
             }
 
             @Override
@@ -81,6 +88,30 @@ public class TripCalculator extends Fragment {
         return view;
     }
 
+    public void setCheapestStationsItemList(){
+        Call<List<FuelStations>> call = ApiClient
+                .getSINGLETON(false)
+                .getApi()
+                .getCheapestStations();
+        call.enqueue(new Callback<List<FuelStations>>() {
+            @Override
+            public void onResponse(Call<List<FuelStations>> call, Response<List<FuelStations>> response) {
+                if (response.isSuccessful()) {
+                    fuelStations = (ArrayList<FuelStations>) response.body();
+
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FuelStations>> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void setItemsList () {
 
         UserPrefs userPrefs = new UserPrefs(getContext());
@@ -98,6 +129,7 @@ public class TripCalculator extends Fragment {
                 if (response.isSuccessful()) {
                     cars = (ArrayList<Car>) response.body();
                     setSpinnerAdapter();
+                    setCheapestStationsItemList();
                 }
             }
 
