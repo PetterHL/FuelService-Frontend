@@ -106,7 +106,7 @@ public class RegisterFragment extends Fragment {
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             response.body().string();
-                            Toast.makeText(mActivity, "Account Created! Login to buy and sell items!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mActivity, "Account Created! Login to access all features!", Toast.LENGTH_SHORT).show();
                             fragmentTransaction.replace(R.id.fragment_contatiner, newFragment).commit();
                         }
                     } else {
