@@ -260,9 +260,10 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
-                    adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
+                    getLastLocation();
+                    //System.out.println(response.body().toString());
+                    //adapter.setFuelStations(fuelStations);
+                    //System.out.println(fuelStations.size());
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
 
