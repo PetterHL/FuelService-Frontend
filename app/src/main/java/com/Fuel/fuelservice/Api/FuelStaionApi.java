@@ -72,10 +72,18 @@ public interface FuelStaionApi {
 
     @GET("service/cheapestStations")
     public Call<List<FuelStations>> getCheapestStations();
+
     @DELETE("service/deleteCar")
     public Call<ResponseBody> deleteCar(@Query("regNumber") String regNumber);
+
     @GET("auth/resetPassword")
     public Call<ResponseBody> resetPassword(@Query("uid") String uid);
+
+
+    @PUT("auth/changepassword")
+    public Call<ResponseBody> changePassword(@Header("Authorization") String token,
+                                              @Query("uid") String uid,
+                                              @Query("pwd") String pwd);
 
 
 }

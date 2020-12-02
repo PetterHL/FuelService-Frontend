@@ -22,6 +22,7 @@ import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.Api.ApiClient;
 
 import com.Fuel.fuelservice.Objects.User;
+import com.Fuel.fuelservice.fragment.ChangePasswordDialogFragment;
 import com.Fuel.fuelservice.fragment.ForgotPasswordDialogFragment;
 import com.Fuel.fuelservice.preference.UserPrefs;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
@@ -32,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
-    TextView forgotPassTv;
+    TextView forgotPassTv, changePass;
     EditText editTextUsername, editTextPwd;
     private User user = new User();
     private Context context;
@@ -50,6 +51,7 @@ public class LoginFragment extends Fragment {
         forgotPassTv = view.findViewById(R.id.forgotPassTV);
         editTextUsername = view.findViewById(R.id.editTextUsernameOnLogin);
         editTextPwd = view.findViewById(R.id.editTextTextPassword);
+        changePass = view.findViewById(R.id.changePassTV);
 
 
         Button loginBtn = (Button) view.findViewById(R.id.loginbtn);
@@ -68,6 +70,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ForgotPasswordDialogFragment dialog = new ForgotPasswordDialogFragment ();
+                dialog .show(getFragmentManager(),"dialog");
+            }
+        });
+        changePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangePasswordDialogFragment dialog = new ChangePasswordDialogFragment ();
                 dialog .show(getFragmentManager(),"dialog");
             }
         });
