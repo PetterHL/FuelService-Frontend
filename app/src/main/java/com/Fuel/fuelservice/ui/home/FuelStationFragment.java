@@ -200,7 +200,7 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    adapter.setFuelStations(fuelStations);
+                    getLastLocation();
                 } else {
                     Toast.makeText(getContext(), "Please log in to use this feature", Toast.LENGTH_SHORT).show();
                     fuelStations.clear();
