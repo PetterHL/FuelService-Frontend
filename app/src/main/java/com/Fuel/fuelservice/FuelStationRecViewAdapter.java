@@ -92,7 +92,7 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
         //Set the right picture corresponding to the stations name.
         FuelStations fuelStation = fuelStations.get(position);
 
-        if (fuelStation.getName().equals("Circle k")) {
+        if (fuelStation.getName().equals("Circle K")) {
             Glide.with(context)
                     .asBitmap()
 
@@ -111,10 +111,16 @@ public class FuelStationRecViewAdapter extends RecyclerView.Adapter<FuelStationR
                     .load("https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Esso_textlogo.svg/1200px-Esso_textlogo.svg.png")
                     .into(holder.imageView);
         }
-        if (fuelStation.getName().equals("Bunker oil")) {
+        if (fuelStation.getName().equals("Bunker Oil")) {
             Glide.with(context)
                     .asBitmap()
                     .load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRirWfZchlANFiTngKeNIM44bRRRC73nSP53A&usqp=CAU")
+                    .into(holder.imageView);
+        }
+        if (fuelStation.getName().equals("Uno-X")) {
+            Glide.with(context)
+                    .asBitmap()
+                    .load("https://lh3.googleusercontent.com/proxy/BPMPz31CwPpMGEF0HY4XVkbN8o0fQJUutGFrYQYo9YjFvrxBRFNYs5qqwRfwZzitA6K5JGIi-ySMurnmd2LM0nLzge20NoFgdHnJ2DXDaM9mkfcx3xD7")
                     .into(holder.imageView);
         }
 

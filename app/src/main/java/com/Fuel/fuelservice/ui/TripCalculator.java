@@ -166,6 +166,10 @@ public class TripCalculator extends Fragment {
                 new ArrayAdapter<Car>(getContext(),android.R.layout.simple_spinner_item,cars);
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(myAdapter);
+
+        if (myAdapter.isEmpty()) {
+            Toast.makeText(getContext(), "You need to add a car to use the Trip Calculator", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void addTrip() {
