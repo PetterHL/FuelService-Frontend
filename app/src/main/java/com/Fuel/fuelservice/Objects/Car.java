@@ -9,11 +9,12 @@ public class Car {
     private String model;
     private boolean petrol;
     private User carOwner;
+    private double fuelUsage;
 
     public Car() {
     }
 
-    public Car(Long carId, String regNumber, int regYear, String manufacturer, String model, boolean petrol, User carOwner) {
+    public Car(Long carId, String regNumber, int regYear, String manufacturer, String model, boolean petrol, User carOwner, double fuelUsage) {
         this.carId = carId;
         this.regNumber = regNumber;
         this.RegYear = regYear;
@@ -21,6 +22,7 @@ public class Car {
         this.model = model;
         this.petrol = petrol;
         this.carOwner = carOwner;
+        this.fuelUsage = fuelUsage;
     }
 
     public Long getId() {
@@ -79,7 +81,25 @@ public class Car {
         this.carOwner = carOwner;
     }
 
+    public double getFuelUsage() {
+        return fuelUsage;
+    }
+
+    public void setFuelUsage(double fuelUsage) {
+        this.fuelUsage = fuelUsage;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
+    }
+
     @Override
+    public String toString() {
+        return regNumber;
+    }
+
+
+    /*@Override
     public String toString() {
         return "Car{" +
                 "id=" + carId +
@@ -90,5 +110,5 @@ public class Car {
                 ", petrol=" + petrol +
                 ", carOwner=" + carOwner +
                 '}';
-    }
+    }*/
 }

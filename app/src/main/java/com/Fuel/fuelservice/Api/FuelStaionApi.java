@@ -37,6 +37,9 @@ public interface FuelStaionApi {
     @GET("service/cars")
     public Call<List<Car>> getAllCars();
 
+    @GET("service/priceChange")
+    public Call<ResponseBody> getPriceChange();
+
     @GET("service/getOwnerCar")
     public Call<List<Car>> getOwnerCars(@Header("Authorization") String Token);
 
@@ -65,6 +68,9 @@ public interface FuelStaionApi {
 
     @GET("service/favoriteStations")
     public Call<List<FuelStations>> getAllFavoritedStations(@Header("Authorization") String token);
+
+    @GET("service/cheapestStations")
+    public Call<List<FuelStations>> getCheapestStations();
 
 
 }

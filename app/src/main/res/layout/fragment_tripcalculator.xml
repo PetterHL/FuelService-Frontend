@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/TripTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Calculator"
+            android:textColor="#000"
+            android:layout_marginTop="40dp"
+            android:textSize="40sp"
+             />
+        <View
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/darker_gray" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="210sp"
+            android:layout_marginTop="40dp"
+            android:layout_height="50sp" />
+
+        <EditText
+            android:id="@+id/editTextDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Distance"
+            android:layout_marginTop="40dp"
+            android:inputType="textEmailAddress"
+            />
+        <EditText
+            android:id="@+id/editTextFuelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="15.43"
+            android:layout_marginTop="40dp"
+            android:inputType="textEmailAddress"
+            />
+        <View
+            android:layout_width="350dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/darker_gray" />
+        <Button
+            android:id="@+id/button"
+            android:layout_height="wrap_content"
+            android:layout_width="210sp"
+            android:layout_marginTop="40dp"
+            android:text="Calculate" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
