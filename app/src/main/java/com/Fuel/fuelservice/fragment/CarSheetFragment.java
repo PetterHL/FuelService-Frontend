@@ -19,7 +19,7 @@ import java.util.zip.Inflater;
 
 public class CarSheetFragment extends BottomSheetDialogFragment{
 
-    private TextView textViewregNumber, textViewManufacturerModel, textViewFuelType;
+    private TextView textViewregNumber, textViewManufacturerModel, textViewFuelType, textViewFuelUsage;
     public CarSheetFragment() {
     }
 
@@ -33,17 +33,36 @@ public class CarSheetFragment extends BottomSheetDialogFragment{
         textViewregNumber = view.findViewById(R.id.regNumber);
         textViewManufacturerModel = view.findViewById(R.id.manufacturer_model);
         textViewFuelType = view.findViewById(R.id.fuelType);
+        textViewFuelUsage = view.findViewById(R.id.fuelUsage);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             String regNumber = bundle.getString("regNumber");
             String manufacturer_model = bundle.getString("manufacturer_model");
             String fuelType = bundle.getString("PetrolPrice");
+            String fuelUsage = bundle.getString("fuelUsage");
 
             textViewregNumber.setText(regNumber);
             textViewManufacturerModel.setText(manufacturer_model);
             textViewFuelType.setText(fuelType);
+            textViewFuelUsage.setText(fuelUsage);
+
         }
+        textViewFuelType.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Fuel Type", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        textViewFuelUsage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Fuel Consumption pr 10km", Toast.LENGTH_SHORT).show();
+
+            }
+        });
         return view;
+
+
 
 
     }
