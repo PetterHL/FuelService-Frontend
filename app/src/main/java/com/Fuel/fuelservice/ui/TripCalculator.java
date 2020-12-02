@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,8 @@ import static com.Fuel.fuelservice.SetDoubleNum.setDoubleNum;
 
 public class TripCalculator extends Fragment {
 
-    EditText editTextDistance, editTextFuelPrice;
+    EditText editTextDistance, editTextFuelPrice, editTextFuelUsage;
+    TextView tripCostTV;
     Button addTrip;
     private User user = new User();
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
@@ -54,8 +56,10 @@ public class TripCalculator extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tripcalculator, container, false);
 
+        editTextFuelUsage = view.findViewById(R.id.editTextFuelUsage);
         editTextDistance = view.findViewById(R.id.editTextDistance);
         editTextFuelPrice = view.findViewById(R.id.editTextFuelPrice);
+        tripCostTV = view.findViewById(R.id.TripCostTv);
         spinner = view.findViewById(R.id.spinner);
         addTrip = view.findViewById(R.id.button);
 
@@ -66,6 +70,10 @@ public class TripCalculator extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 car = (Car) parent.getSelectedItem();
                 displayUserData(car);
+                Car car = (Car) spinner.getSelectedItem();
+                if (car.getFuelUsage() != 0) {
+                    editTextFuelUsage.setText(String.valueOf(car.getFuelUsage()));
+                }
                 
                 if(car != null && (!fuelStations.isEmpty())) {
                     if (car.isPetrol()) {
@@ -173,17 +181,35 @@ public class TripCalculator extends Fragment {
     }
 
     public void addTrip() {
-        //Car car = (Car) spinner.getSelectedItem();
-        //if (car.getFuelUsage() != 0) {
-      //      editTextFuelPrice.setText(String.valueOf(car.getFuelUsage()));
-        //}
         String distanceText = editTextDistance.getText().toString();
-        double distanceDouble = Double.parseDouble(distanceText);
 
         String fuelText = editTextFuelPrice.getText().toString();
+
+
+
+        Car car = (Car) spinner.getSelectedItem();
+        if (car.getFuelUsage() != 0) {
+            editTextFuelUsage.setText(String.valueOf(car.getFuelUsage()));
+        }
+        if (distanceText.isEmpty()) {
+            editTextDistance.setError("Please enter a distance!");
+            editTextDistance.requestFocus();
+            return;
+        }
+        if (fuelText.isEmpty()) {
+            editTextFuelPrice.setError("Please enter a fuel price!");
+            editTextFuelPrice.requestFocus();
+            return;
+        }
+
+        double distanceDouble = Double.parseDouble(distanceText);
         double fuelDouble = Double.parseDouble(fuelText);
 
-        System.out.println(calculateFuelUsage(fuelDouble,distanceDouble));
+        String fuelUsage = editTextFuelUsage.getText().toString();
+        double fuelUsageDouble = Double.parseDouble(fuelUsage);
+        
+
+        calculateFuelUsage(fuelDouble,distanceDouble,fuelUsageDouble);
 
 
 
@@ -193,9 +219,12 @@ public class TripCalculator extends Fragment {
         System.out.println(car.getManufacturer());
     }
 
-    public double calculateFuelUsage(double fuelUsage, double distance) {
+    public void calculateFuelUsage(double fuelUsage, double distance, double fuelPrice) {
 
-        return (distance/10) * fuelUsage;
+        double calc = ((distance/10) * fuelUsage) * fuelPrice;
+        String calcString = String.valueOf(calc);
+        tripCostTV.setText(calcString);
+
     }
 
 
