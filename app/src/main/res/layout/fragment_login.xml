@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_header"
-        android:textColor="#000"
+        android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,6 @@
         android:layout_width="350dp"
         android:layout_height="2dp"
         android:layout_gravity="center_horizontal"
-        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/editTextUsernameOnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +37,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/prompt_username"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,8 +50,10 @@
 
     <EditText
         android:id="@+id/editTextTextPassword"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
         android:ems="10"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
@@ -64,6 +68,7 @@
         android:id="@+id/loginbtn"
         android:layout_width="210sp"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
         android:text="@string/action_login_button"
         android:background="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
