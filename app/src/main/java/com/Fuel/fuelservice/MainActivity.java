@@ -22,7 +22,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.Fuel.fuelservice.Api.ApiClient;
-import com.Fuel.fuelservice.ui.Maps.MapActivity;
+import com.Fuel.fuelservice.ui.Maps.MapFragment;
 import com.Fuel.fuelservice.ui.Maps.UserPositionFinder;
 import com.Fuel.fuelservice.ui.MyCar.MyCars;
 import com.Fuel.fuelservice.ui.TripCalculator;
@@ -133,9 +133,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new FuelStationFragment()).commit();
                 break;
             case R.id.nav_map:
-                Intent intent = new Intent(this, MapActivity.class);
-                startActivity(intent);
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
+                        new MapFragment()).commit();
+                break;
             case R.id.nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_contatiner,
                         new RegisterFragment()).commit();
