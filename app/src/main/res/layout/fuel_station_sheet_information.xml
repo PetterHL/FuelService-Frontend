@@ -40,13 +40,13 @@
 
         <TextView
             android:id="@+id/tvStationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="62dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Station"
+            android:layout_marginTop="15dp"
+            android:text="Station name that is very long"
             android:textColor="@android:color/black"
-            android:textSize="35dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView

@@ -54,8 +54,8 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.StationTitle.setText(cars.get(position).getRegNumber().toUpperCase());
-        holder.PetrolPrice.setText(cars.get(position).getModel());
-        holder.DieselPrice.setText(cars.get(position).getManufacturer());
+        holder.DieselPrice.setText(cars.get(position).getModel());
+        holder.PetrolPrice.setText(cars.get(position).getManufacturer());
         holder.nearby.setText("");
 
 
@@ -77,10 +77,9 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
                 }
 
                 String regNumber = car.getRegNumber().toUpperCase();
-
+                String fuelUsage = String.valueOf(car.getFuelUsage());
                 String model = String.valueOf(car.getModel()).toUpperCase();
                 String manufacturer = String.valueOf(car.getManufacturer()).toUpperCase();
-
                 String manufacturerModel = manufacturer+ " " + model;
 
 
@@ -89,6 +88,7 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
                 bundle.putString("regNumber", regNumber);
                 bundle.putString("manufacturer_model", manufacturerModel);
                 bundle.putString("PetrolPrice", fuelType);
+                bundle.putString("fuelUsage", fuelUsage);
                 intent.putExtra("myPackage", bundle);
 
                 carSheetFragment.setArguments(bundle);
@@ -98,7 +98,7 @@ public class CarRecViewAdapter extends RecyclerView.Adapter<CarRecViewAdapter.Vi
 
         Glide.with(context)
                 .asBitmap()
-                .load("https://picsum.photos/100")
+                .load("https://images.clipartlogo.com/files/istock/previews/8232/82323479-car-icon-design.jpg")
                 .into(holder.imageView);
     }
 

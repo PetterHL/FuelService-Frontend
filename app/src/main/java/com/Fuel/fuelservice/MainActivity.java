@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             navMenu.findItem(R.id.nav_home).setVisible(true);
             navMenu.findItem(R.id.nav_map).setVisible(true);
-            navMenu.findItem(R.id.nav_stats).setVisible(true);
+            navMenu.findItem(R.id.nav_stats).setVisible(false);
             navMenu.findItem(R.id.nav_MyCar).setVisible(true);
             navMenu.findItem(R.id.nav_TripCalculator).setVisible(true);
             navMenu.findItem(R.id.nav_login).setVisible(false);

@@ -3,15 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nav_home"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:padding="10dp">
 
 
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="401dp"
+        android:layout_height="240dp"
         android:orientation="vertical">
 
 
@@ -23,14 +22,14 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/regNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:text="RegNumber"
-            android:textSize="35dp"
             android:textColor="@android:color/black"
+            android:textSize="35dp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,18 +37,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="TextView"
-            android:textSize="25dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:text="Bil bilesen"
+            android:textSize="25dp" />
 
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"    android:orientation="horizontal">
         <TextView
             android:id="@+id/fuelType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="TextView"
-            android:textSize="25dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Petrol"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/fuelUsage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="0.69"
+            android:onClick="onClick"
+            android:clickable="true"
+            android:textSize="25dp" />
+</LinearLayout>
 
 
     </LinearLayout>

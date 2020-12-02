@@ -23,12 +23,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trip Calculator"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:layout_marginTop="40dp"
             android:textSize="40sp"
              />
         <View
-            android:layout_width="350dp"
+            android:layout_width="330dp"
             android:layout_height="2dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
@@ -36,30 +36,35 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="210sp"
+            android:layout_width="235dp"
+            android:layout_height="51dp"
             android:layout_marginTop="40dp"
-            android:layout_height="50sp" />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/editTextDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Distance"
             android:layout_marginTop="40dp"
-            android:inputType="textEmailAddress"
-            />
+            android:ems="10"
+            android:hint="Distance in kilometers"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
         <EditText
             android:id="@+id/editTextFuelPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:ems="10"
+            android:textSize="20sp"
             android:hint="15.43"
             android:layout_marginTop="40dp"
             android:inputType="textEmailAddress"
             />
         <View
-            android:layout_width="350dp"
+            android:layout_width="330dp"
             android:layout_height="2dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
