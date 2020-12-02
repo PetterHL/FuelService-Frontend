@@ -1,16 +1,19 @@
 package com.Fuel.fuelservice.ui.login;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.io.IOException;
@@ -19,6 +22,7 @@ import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.Api.ApiClient;
 
 import com.Fuel.fuelservice.Objects.User;
+import com.Fuel.fuelservice.fragment.ForgotPasswordDialogFragment;
 import com.Fuel.fuelservice.preference.UserPrefs;
 import com.Fuel.fuelservice.ui.home.FuelStationFragment;
 
@@ -28,18 +32,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
-
+    TextView forgotPassTv;
     EditText editTextUsername, editTextPwd;
     private User user = new User();
+    private Context context;
 
+    public LoginFragment(Context context) {
+        this.context = context;
+    }
+    public LoginFragment() {
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
+        forgotPassTv = view.findViewById(R.id.forgotPassTV);
         editTextUsername = view.findViewById(R.id.editTextUsernameOnLogin);
         editTextPwd = view.findViewById(R.id.editTextTextPassword);
+
 
         Button loginBtn = (Button) view.findViewById(R.id.loginbtn);
 
@@ -51,6 +62,13 @@ public class LoginFragment extends Fragment {
                         userLogin();
                         break;
                 }
+            }
+        });
+        forgotPassTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForgotPasswordDialogFragment dialog = new ForgotPasswordDialogFragment ();
+                dialog .show(getFragmentManager(),"dialog");
             }
         });
 
