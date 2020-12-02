@@ -330,7 +330,6 @@ public class FuelStationFragment extends Fragment {
                     userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
                     System.out.println("My position " + userPosistion);
                     updateDistances(userPosistion);
-                    System.out.println(fuelStations.get(0).getCoordinates());
                     if (menuSelect == 1) {
                         fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
                     }

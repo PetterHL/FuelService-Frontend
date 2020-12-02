@@ -237,4 +237,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         });
 
     }
+
+    public void show(Context context, String tag) {
+    }
 }
