@@ -71,6 +71,8 @@ public interface FuelStaionApi {
 
     @GET("service/cheapestStations")
     public Call<List<FuelStations>> getCheapestStations();
+    @DELETE("service/deleteCar")
+    public Call<ResponseBody> deleteCar(@Query("regNumber") String regNumber);
 
 
 }

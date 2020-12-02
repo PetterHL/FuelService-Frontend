@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navMenu.findItem(R.id.nav_TripCalculator).setVisible(false);
             navMenu.findItem(R.id.nav_login).setVisible(true);
             navMenu.findItem(R.id.nav_register).setVisible(true);
-            navMenu.findItem(R.id.nav_settings).setVisible(true);
+            navMenu.findItem(R.id.nav_settings).setVisible(false);
             navMenu.findItem(R.id.nav_logOut).setVisible(false);
         } else {
             navMenu.findItem(R.id.nav_home).setVisible(true);
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navMenu.findItem(R.id.nav_TripCalculator).setVisible(true);
             navMenu.findItem(R.id.nav_login).setVisible(false);
             navMenu.findItem(R.id.nav_register).setVisible(false);
-            navMenu.findItem(R.id.nav_settings).setVisible(true);
+            navMenu.findItem(R.id.nav_settings).setVisible(false);
             navMenu.findItem(R.id.nav_logOut).setVisible(true);
         }
     }
