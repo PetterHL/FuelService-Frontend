@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,11 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.Fuel.fuelservice.Api.ApiClient;
-import com.Fuel.fuelservice.ui.MyCar.MyCars;
-import com.Fuel.fuelservice.CarRecViewAdapter;
+import com.Fuel.fuelservice.SetDoubleNum;
 import com.Fuel.fuelservice.Objects.User;
 import com.Fuel.fuelservice.R;
 import com.Fuel.fuelservice.preference.UserPrefs;
@@ -35,8 +32,6 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.DecimalFormat;
-import java.util.function.ToDoubleBiFunction;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,6 +41,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.Fuel.fuelservice.SetDoubleNum.setDoubleNum;
 
 public class AddCar extends BottomSheetDialogFragment {
 
@@ -134,8 +131,10 @@ public class AddCar extends BottomSheetDialogFragment {
                     return;
                 }
 
-                double fuelUsage_double = setDouble(fuelUsage);
+               // SetDoubleNum setDoubleNum = new SetDoubleNum();
 
+                double fuelUsage_double = Double.parseDouble(fuelUsage);
+                System.out.println(fuelUsage_double);
                 if (fuelUsage_double < 0) {
                     field_fuelUsage.setError("Fuel consumption can not be a negative number");
                     field_fuelUsage.requestFocus();
@@ -200,7 +199,7 @@ public class AddCar extends BottomSheetDialogFragment {
         Call<ResponseBody> call = ApiClient
                 .getSINGLETON(false)
                 .getApi()
-                .addCar(token, RegNumber, manufacturer, model, petrol, fuelUsage);
+                .addCar(token, RegNumber.toUpperCase(), manufacturer.toUpperCase(), model.toUpperCase(), petrol, fuelUsage);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -282,23 +281,6 @@ public class AddCar extends BottomSheetDialogFragment {
             diesel_radio.setChecked(true);
         }
 
-    }
-
-
-    /**
-     * @param fuelUsage
-     * @return a double with 2 decimals
-     */
-    private static double setDouble(String fuelUsage) {
-
-        double fuelUsage_double = Double.parseDouble(fuelUsage);
-
-        DecimalFormat df = new DecimalFormat("#.00");
-        String fuelUsage_String = df.format(fuelUsage_double);
-
-        double fuelUsage_decimal = Double.parseDouble(fuelUsage_String);
-
-        return fuelUsage_decimal;
     }
 
 }

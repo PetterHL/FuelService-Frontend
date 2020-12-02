@@ -22,7 +22,6 @@
         android:id="@+id/menu_bottom"
         android:checkableBehavior="single">
 
-
         <item
             android:id="@+id/nav_stats"
             android:icon="@drawable/ic_baseline_signal_cellular_alt_24"
@@ -34,9 +33,9 @@
             android:title="@string/menu_MyCar"
             android:visible="false"/>
         <item
-            android:id="@+id/nav_fuelCalculator"
+            android:id="@+id/nav_TripCalculator"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_fuelCalculator"
+            android:title="@string/menu_tripCalculator"
             android:visible="false"/>
     </group>
 

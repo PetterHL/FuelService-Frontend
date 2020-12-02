@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Fuel.fuelservice.Api.ApiClient;
+import com.Fuel.fuelservice.DistanceSorter;
 import com.Fuel.fuelservice.FuelStationRecViewAdapter;
 import com.Fuel.fuelservice.Objects.FuelStations;
 import com.Fuel.fuelservice.R;
@@ -57,7 +59,7 @@ public class FuelStationFragment extends Fragment {
     public ArrayList<FuelStations> fuelStations = new ArrayList<>();
     private FuelStationRecViewAdapter adapter;
     private RecyclerView itemRecyclerView;
-    AppCompatRadioButton nearbyButton, favoriteButton ,cheapButton;
+    AppCompatRadioButton nearbyButton, favoriteButton, cheapButton;
 
     private float menuSelect = 1;
 
@@ -80,11 +82,7 @@ public class FuelStationFragment extends Fragment {
         favoriteButton = view.findViewById(R.id.favoriteButton);
         cheapButton = view.findViewById(R.id.cheapButton);
 
-        System.out.println("6966969696966969699696969");
-        System.out.println(getActivity());
-
         context = getContext();
-
 
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +116,7 @@ public class FuelStationFragment extends Fragment {
         adapter.setFuelStations(fuelStations);
 
         itemRecyclerView.setAdapter(adapter);
-        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        itemRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
 
         return view;
@@ -233,6 +231,7 @@ public class FuelStationFragment extends Fragment {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
                     System.out.println(response.body().toString());
+                    fuelStations.sort(new DistanceSorter());
                     adapter.setFuelStations(fuelStations);
                     System.out.println(fuelStations.size());
                 } else {
@@ -261,9 +260,10 @@ public class FuelStationFragment extends Fragment {
                 if (response.isSuccessful()) {
                     fuelStations = (ArrayList<FuelStations>) response.body();
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
-                    adapter.setFuelStations(fuelStations);
-                    System.out.println(fuelStations.size());
+                    getLastLocation();
+                    //System.out.println(response.body().toString());
+                    //adapter.setFuelStations(fuelStations);
+                    //System.out.println(fuelStations.size());
                 } else {
                     Toast.makeText(getContext(), "Failed to fetch items. Try again", Toast.LENGTH_SHORT).show();
 
@@ -302,9 +302,25 @@ public class FuelStationFragment extends Fragment {
 
     public void getLastLocation() {
 
+        Task<Location> locationTask = null;
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
-        @SuppressLint("MissingPermission") Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale((AppCompatActivity)getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                } else {
+                    ActivityCompat.requestPermissions((AppCompatActivity)getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                }
+            }
+            Toast.makeText(getContext(), "You need to give the app access to use this feature", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            locationTask = fusedLocationProviderClient.getLastLocation();
+        }
 
 
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -312,7 +328,9 @@ public class FuelStationFragment extends Fragment {
             public void onSuccess(Location location) {
                 if (location != null) {
                     userPosistion = new LatLng(location.getLatitude(), location.getLongitude());
+                    System.out.println("My position " + userPosistion);
                     updateDistances(userPosistion);
+                    System.out.println(fuelStations.get(0).getCoordinates());
                     if (menuSelect == 1) {
                         fuelStations.sort((f1,f2)->(f1.getUserDistance()) > ((f2.getUserDistance())) ? 1 :-1);
                     }
@@ -341,8 +359,8 @@ public class FuelStationFragment extends Fragment {
             String [] value = fuelStations.getCoordinates().split(",");
 
             //Changes the values from String to double
-            double coordNorth = Double.valueOf(value[0]);
-            double coordWest = Double.valueOf(value[1]);
+            double coordNorth = Double.parseDouble(value[0]);
+            double coordWest = Double.parseDouble(value[1]);
 
             stationPosition = new LatLng(coordNorth, coordWest);
 
@@ -356,7 +374,7 @@ public class FuelStationFragment extends Fragment {
         }
     }
 
-    /*public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
@@ -371,7 +389,7 @@ public class FuelStationFragment extends Fragment {
                 }
             }
         }
-    }*/
+    }
 
     //Rounds the double to specific decimals
     public static double round(double value, int places) {
