@@ -11,11 +11,23 @@
     <string name="menu_map">Map</string>
     <string name="menu_stats">Statistics</string>
     <string name="menu_MyCar">My Car</string>
-    <string name="menu_fuelCalculator">Fuel Calculator</string>
+    <string name="menu_tripCalculator">Trip Calculator</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
     <string name="menu_register">Register</string>
     <string name="menu_logOut">Log out</string>
+
+    <string name="register_heading">Create user</string>
+    <string name="action_reg_button">Register</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_email">Email</string>
+
+    <string name="action_login_button">Log in</string>
+    <string name="login_header">Log in</string>
     <string name="icon">img placeholder</string>
     <string name="nearby">0.05km</string>
+    <string name="nearby2">Nearby</string>
+    <string name="cheapest">Cheapest</string>
+    <string name="favorites">Favorites</string>
 </resources>

@@ -4,6 +4,7 @@
         <domain includeSubdomains="true">192.168.0.111</domain>
         <domain includeSubdomains="true">10.0.0.21</domain>
         <domain includeSubdomains="true">10.22.193.141</domain>
-
+        <domain includeSubdomains="true">192.168.1.3</domain>
+        <domain includeSubdomains="true">no.registreringsnummerapi.com</domain>
     </domain-config>
 </network-security-config>

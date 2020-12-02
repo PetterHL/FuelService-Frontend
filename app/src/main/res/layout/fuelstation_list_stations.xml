@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="15dip"
         android:src="@mipmap/ic_launcher" />
 
@@ -33,14 +33,14 @@
 
         <TextView
             android:id="@+id/headerText"
-            android:layout_width="115dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_toRightOf="@id/icon"
             android:gravity="center_vertical"
             android:text="Station name"
             android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold">
 
         </TextView>
@@ -50,7 +50,7 @@
             android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:text="0.04 Km"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 
@@ -72,7 +72,7 @@
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/icon"
             android:text="Petrol price"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/dieselPrice"
@@ -83,7 +83,7 @@
 
             android:layout_toRightOf="@id/icon"
             android:text="Diesel price"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 </RelativeLayout>

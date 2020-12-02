@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_baseline_apps_24"
-            android:title="@string/menu_prices" />
+            android:title="@string/menu_prices"
+            android:visible="true"
+            app:itemTextColor="@android:color/holo_red_light"/>
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_baseline_map_24"
-            android:title="@string/menu_map" />
+            android:title="@string/menu_map"
+            android:visible="true"/>
     </group>
 
     <group
         android:id="@+id/menu_bottom"
-        android:checkableBehavior="none">
-
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_stats"
             android:icon="@drawable/ic_baseline_signal_cellular_alt_24"
-            android:title="@string/menu_stats" />
+            android:title="@string/menu_stats"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_MyCar"
             android:icon="@drawable/ic_baseline_directions_car_24"
-            android:title="@string/menu_MyCar" />
+            android:title="@string/menu_MyCar"
+            android:visible="false"/>
         <item
-            android:id="@+id/nav_fuelCalculator"
+            android:id="@+id/nav_TripCalculator"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_fuelCalculator" />
+            android:title="@string/menu_tripCalculator"
+            android:visible="false"/>
     </group>
 
     <group
         android:id="@+id/menu_middle"
-        android:checkableBehavior="none">
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_baseline_person_24"
-            android:title="@string/menu_login" />
+            android:title="@string/menu_login"
+            android:visible="true"/>
         <item
             android:id="@+id/nav_register"
             android:icon="@drawable/ic_baseline_person_add_24"
-            android:title="@string/menu_register" />
-        <item
-            android:id="@+id/nav_logOut"
-            android:visible="false"
-            android:icon="@drawable/ic_baseline_exit_to_app_24"
-            android:title="@string/menu_logOut" />
+            android:title="@string/menu_register"
+            android:visible="true"/>
     </group>
 
-    <group>
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"
-            android:title="@string/menu_settings" />
+            android:title="@string/menu_settings"
+            android:visible="true"/>
+    </group>
+    <group>
+        <item
+            android:id="@+id/nav_logOut"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
+            android:title="@string/menu_logOut"
+            android:visible="false"/>
     </group>
 </menu>

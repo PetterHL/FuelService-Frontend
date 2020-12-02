@@ -1,29 +1,31 @@
 package com.Fuel.fuelservice.Objects;
 
-public class FuelStations {
+public class FuelStations  {
 
     private Long id;
     private String name;
     private String coordinates;
-    private int petrolPrice;
-    private int dieselPrice;
+    private double petrolPrice;
+    private double dieselPrice;
     private boolean diesel;
     private boolean petrol;
+    private double userDistance;
 
     public FuelStations(Long id) {
         this.id = id;
     }
 
-    public FuelStations(String name, String coordinates, int petrolPrice, int dieselPrice, boolean diesel, boolean petrol) {
+    public FuelStations(String name, String coordinates, double petrolPrice, double dieselPrice, boolean diesel, boolean petrol, double userDistance) {
         this.name = name;
         this.coordinates = coordinates;
         this.petrolPrice = petrolPrice;
         this.dieselPrice = dieselPrice;
         this.diesel = diesel;
         this.petrol = petrol;
+        this.userDistance = userDistance;
     }
 
-    public FuelStations(Long id, String name, String coordinates, int petrolPrice, int dieselPrice, boolean diesel, boolean petrol) {
+    public FuelStations(Long id, String name, String coordinates, double petrolPrice, double dieselPrice, boolean diesel, boolean petrol, double userDistance) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -31,6 +33,7 @@ public class FuelStations {
         this.dieselPrice = dieselPrice;
         this.diesel = diesel;
         this.petrol = petrol;
+        this.userDistance = userDistance;
     }
 
     public Long getId() {
@@ -57,7 +60,7 @@ public class FuelStations {
         this.coordinates = coordinates;
     }
 
-    public int getPetrolPrice() {
+    public double getPetrolPrice() {
         return petrolPrice;
     }
 
@@ -65,12 +68,20 @@ public class FuelStations {
         this.petrolPrice = petrolPrice;
     }
 
-    public int getDieselPrice() {
+    public double getDieselPrice() {
         return dieselPrice;
     }
 
     public void setDieselPrice(int dieselPrice) {
         this.dieselPrice = dieselPrice;
+    }
+
+    public double getUserDistance() {
+        return userDistance;
+    }
+
+    public void setUserDistance(double userDistance) {
+        this.userDistance = userDistance;
     }
 
     public boolean isDiesel() {
@@ -99,8 +110,10 @@ public class FuelStations {
                 ", dieselPrice=" + dieselPrice +
                 ", diesel=" + diesel +
                 ", petrol=" + petrol +
+                ", userDistance=" + userDistance +
                 '}';
     }
+
     public String petrolToString() {
         return "95 | " + petrolPrice;
     }
