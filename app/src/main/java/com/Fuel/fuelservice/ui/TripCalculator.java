@@ -223,7 +223,8 @@ public class TripCalculator extends Fragment {
 
         double calc = ((distance/10) * fuelUsage) * fuelPrice;
         String calcString = String.valueOf(calc);
-        tripCostTV.setText(calcString);
+        String kr = " kr";
+        tripCostTV.setText(calcString + kr);
 
     }
 
