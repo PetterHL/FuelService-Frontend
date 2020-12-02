@@ -96,7 +96,7 @@
 
     <RadioGroup
         android:id="@+id/RadioGroup"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +106,7 @@
 
         <RadioButton
             android:id="@+id/petrol_radio"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Petrol"
@@ -115,6 +116,7 @@
 
         <RadioButton
             android:id="@+id/diesel_radio"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Diesel"

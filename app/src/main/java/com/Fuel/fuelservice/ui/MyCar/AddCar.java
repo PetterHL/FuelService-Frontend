@@ -122,22 +122,22 @@ public class AddCar extends BottomSheetDialogFragment {
                 }
 
                 if(petrol_radio.isChecked()) {
-                    boolean petrol = true;
+                     petrol = true;
                 } else if(diesel_radio.isChecked()) {
-                    boolean petrol = false;
+                     petrol = false;
                 } else {
-                    petrol_radio.setError("Please choose fueltype");
-                    petrol_radio.requestFocus();
+                    Toast.makeText(getContext(), "Please choose a fuel type", Toast.LENGTH_SHORT).show();
+                    diesel_radio.requestFocus();
                     return;
                 }
 
                // SetDoubleNum setDoubleNum = new SetDoubleNum();
-
                 double fuelUsage_double = Double.parseDouble(fuelUsage);
-                System.out.println(fuelUsage_double);
-                if (fuelUsage_double < 0) {
+
+                if (fuelUsage_double <= 0) {
                     field_fuelUsage.setError("Fuel consumption can not be a negative number");
                     field_fuelUsage.requestFocus();
+                    return;
                 }
 
                 addCar(RegNumber, manufacturer, model, petrol, fuelUsage_double);
@@ -165,8 +165,6 @@ public class AddCar extends BottomSheetDialogFragment {
                 if (response.isSuccessful()) {
                     try {
                         Parse(response.body().string());
-
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -80,7 +80,6 @@ public class MyCars extends Fragment {
             public void onClick(View v) {
                 AddCar addCar = new AddCar();
                 addCar.show(getChildFragmentManager(), "addCar");
-
             }
         });
 
