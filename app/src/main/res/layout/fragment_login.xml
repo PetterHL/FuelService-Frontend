@@ -65,7 +65,7 @@
         android:layout_width="210sp"
         android:layout_height="wrap_content"
         android:text="@string/action_login_button"
-        android:background="@drawable/mybutton"
+        android:background="@android:color/holo_red_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

@@ -94,6 +94,7 @@
             android:id="@+id/button"
             android:layout_height="wrap_content"
             android:layout_width="210sp"
+            android:background="@android:color/holo_red_light"
             android:layout_marginTop="20dp"
             android:text="Calculate" />
         <TextView
