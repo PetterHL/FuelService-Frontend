@@ -32,11 +32,12 @@ public class ForgotPasswordDialogFragment extends DialogFragment {
         button = view.findViewById(R.id.forgotPasswordButton);
         uidText = view.findViewById(R.id.ETEmailAddress);
 
-        String uidTextString = uidText.getText().toString();
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String uidTextString = uidText.getText().toString();
                 Call<ResponseBody> call = ApiClient
                         .getSINGLETON(false)
                         .getApi()
